@@ -1,4 +1,4 @@
-package com.mahmoud_ashraf.androidgradlekts
+package com.mahmoud_ashraf.rickandmorty
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -19,6 +19,6 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("com.mahmoud_ashraf.androidgradlekts", appContext.packageName)
+        assertEquals("com.mahmoud_ashraf.rickandmorty", appContext.packageName)
     }
 }

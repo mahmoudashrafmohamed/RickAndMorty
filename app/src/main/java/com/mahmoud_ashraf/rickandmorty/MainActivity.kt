@@ -1,4 +1,4 @@
-package com.mahmoud_ashraf.androidgradlekts
+package com.mahmoud_ashraf.rickandmorty
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

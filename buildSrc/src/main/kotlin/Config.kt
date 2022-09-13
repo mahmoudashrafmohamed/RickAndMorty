@@ -11,7 +11,7 @@ object Config {
     const val versionCode = 1
     const val versionName = "1.0.0"
 
-    const val applicationId = "com.mahmoud_ashraf.androidgradlekts"
+    const val applicationId = "com.mahmoud_ashraf.rickandmorty"
 
     const val testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 

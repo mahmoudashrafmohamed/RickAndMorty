@@ -1,4 +1,4 @@
-package com.mahmoud_ashraf.androidgradlekts
+package com.mahmoud_ashraf.rickandmorty
 
 import org.junit.Test
 
