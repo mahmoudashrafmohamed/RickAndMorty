@@ -12,6 +12,12 @@ object Dependencies {
         const val Material = "com.google.android.material:material:${Versions.material}"
     }
 
+    object DaggerHilt {
+        const val hiltAndroid = "com.google.dagger:hilt-android:${Versions.hilt}"
+        const val hiltKapt = "com.google.dagger:hilt-compiler:${Versions.hilt}"
+        const val hiltViewModel = "androidx.hilt:hilt-lifecycle-viewmodel:${Versions.hiltViewModel}"
+    }
+
     object Test {
         const val EspressoCore = "androidx.test.espresso:espresso-core:${Versions.espressoCore}"
 

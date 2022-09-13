@@ -2,10 +2,13 @@ import Dependencies.AndroidX
 import Dependencies.Kotlin
 import Dependencies.Test
 import Dependencies.TestConfigurations
+import Dependencies.DaggerHilt
 
 plugins {
     id(Plugins.androidLib)
     id(Plugins.kotlinAndroid)
+    id(Plugins.daggerHilt)
+    id(Plugins.kotlinKapt)
 }
 
 configurations {
@@ -55,6 +58,11 @@ dependencies {
 
     // Coroutines
     api(Kotlin.Coroutines)
+
+    //Dagger-Hilt
+    implementation (DaggerHilt.hiltAndroid)
+    implementation (DaggerHilt.hiltViewModel)
+    kapt(DaggerHilt.hiltKapt)
 
     // Test Dependencies
     testImplementation(Test.Junit)
