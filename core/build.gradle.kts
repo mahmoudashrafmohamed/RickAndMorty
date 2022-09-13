@@ -1,34 +1,28 @@
 import Dependencies.AndroidX
 import Dependencies.Kotlin
 import Dependencies.Test
-import Dependencies.Modules
 
 plugins {
-    id("com.android.application")
-    id("kotlin-android")
-    id("kotlin-kapt")
-    id("name.remal.check-dependency-updates") version Versions.CheckDependencyUpdates
-
+    id("com.android.library")
+    id("org.jetbrains.kotlin.android")
 }
 
 android {
-    compileSdk = Config.compileSdkVersion
+    compileSdk = 32
 
     defaultConfig {
-        applicationId = Config.applicationId
-        minSdk = Config.minSdkVersion
-        targetSdk = Config.targetSdkVersion
-        versionCode = Config.versionCode
-        versionName = Config.versionName
+        minSdk = 21
+        targetSdk = 32
 
-        testInstrumentationRunner = Config.testInstrumentationRunner
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles("consumer-rules.pro")
     }
 
     buildTypes {
-        getByName("release") {
-            isMinifyEnabled = true
+        release {
+            isMinifyEnabled = false
             proguardFiles(
-                getDefaultProguardFile("proguard-android.txt"),
+                getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
         }
@@ -38,12 +32,12 @@ android {
         targetCompatibility = JavaVersion.VERSION_1_8
     }
     kotlinOptions {
-        jvmTarget = Config.jvmTarget
+        jvmTarget = "1.8"
     }
 }
 
 dependencies {
-    implementation(project(Modules.core))
+
     implementation(AndroidX.CoreKtx)
     implementation(AndroidX.AppCompat)
     implementation(AndroidX.Material)

@@ -18,4 +18,8 @@ object Dependencies {
         const val Junit = "junit:junit:${Versions.jUnit}"
         const val JunitExt = "androidx.test.ext:junit:${Versions.jUnitExt}"
     }
+
+    object Modules {
+        const val core = ":core"
+    }
 }
