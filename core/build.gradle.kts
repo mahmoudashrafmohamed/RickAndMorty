@@ -3,19 +3,17 @@ import Dependencies.Kotlin
 import Dependencies.Test
 
 plugins {
-    id("com.android.library")
-    id("org.jetbrains.kotlin.android")
+    id(Plugins.androidLib)
+    id(Plugins.kotlinAndroid)
 }
 
 android {
-    compileSdk = 32
+    compileSdk = Config.compileSdkVersion
 
     defaultConfig {
-        minSdk = 21
-        targetSdk = 32
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles("consumer-rules.pro")
+        minSdk = Config.minSdkVersion
+        targetSdk = Config.targetSdkVersion
+        testInstrumentationRunner = Config.testInstrumentationRunner
     }
 
     buildTypes {

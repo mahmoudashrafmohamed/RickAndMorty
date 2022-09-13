@@ -4,11 +4,10 @@ import Dependencies.Test
 import Dependencies.Modules
 
 plugins {
-    id("com.android.application")
-    id("kotlin-android")
-    id("kotlin-kapt")
-    id("name.remal.check-dependency-updates") version Versions.CheckDependencyUpdates
-
+    id(Plugins.android)
+    id(Plugins.kotlinAndroid)
+    id(Plugins.kotlinKapt)
+    id(Plugins.checkDependencyUpdates) version Versions.CheckDependencyUpdates
 }
 
 android {
