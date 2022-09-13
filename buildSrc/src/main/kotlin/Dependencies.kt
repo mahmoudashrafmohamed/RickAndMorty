@@ -18,6 +18,12 @@ object Dependencies {
         const val hiltViewModel = "androidx.hilt:hilt-lifecycle-viewmodel:${Versions.hiltViewModel}"
     }
 
+    object Retrofit {
+        const val retrofit = "com.squareup.retrofit2:retrofit:${Versions.retrofit}"
+        const val gson = "com.squareup.retrofit2:converter-gson:${Versions.gson}"
+        const val loggingInterceptor = "com.squareup.okhttp3:logging-interceptor:${Versions.loggingInterceptor}"
+    }
+
     object Test {
         const val EspressoCore = "androidx.test.espresso:espresso-core:${Versions.espressoCore}"
 

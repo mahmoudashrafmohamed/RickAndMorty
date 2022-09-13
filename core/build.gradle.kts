@@ -3,6 +3,7 @@ import Dependencies.Kotlin
 import Dependencies.Test
 import Dependencies.TestConfigurations
 import Dependencies.DaggerHilt
+import Dependencies.Retrofit
 
 plugins {
     id(Plugins.androidLib)
@@ -59,10 +60,15 @@ dependencies {
     // Coroutines
     api(Kotlin.Coroutines)
 
-    //Dagger-Hilt
-    implementation (DaggerHilt.hiltAndroid)
-    implementation (DaggerHilt.hiltViewModel)
+    // Dagger-Hilt
+    api (DaggerHilt.hiltAndroid)
+    api (DaggerHilt.hiltViewModel)
     kapt(DaggerHilt.hiltKapt)
+
+    // Retrofit
+    api(Retrofit.retrofit)
+    api(Retrofit.gson)
+    api(Retrofit.loggingInterceptor)
 
     // Test Dependencies
     testImplementation(Test.Junit)
