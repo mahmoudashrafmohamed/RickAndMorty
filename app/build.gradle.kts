@@ -1,7 +1,5 @@
-import Dependencies.AndroidX
-import Dependencies.Kotlin
-import Dependencies.Test
 import Dependencies.Modules
+import Dependencies.TestConfigurations
 
 plugins {
     id(Plugins.android)
@@ -39,20 +37,14 @@ android {
     kotlinOptions {
         jvmTarget = Config.jvmTarget
     }
+    buildFeatures {
+        viewBinding = true
+    }
 }
 
 dependencies {
-    implementation(project(Modules.core))
-    implementation(AndroidX.CoreKtx)
-    implementation(AndroidX.AppCompat)
-    implementation(AndroidX.Material)
-    implementation(AndroidX.ConstraintLayout)
-
-    implementation(Kotlin.Stdlib)
-    implementation(Kotlin.Coroutines)
-
-    testImplementation(Test.Junit)
-
-    androidTestImplementation(Test.JunitExt)
-    androidTestImplementation(Test.EspressoCore)
+    implementation(project(Modules.core)) {
+        testImplementation(project(path = Modules.core, configuration = TestConfigurations.testImplementation))
+        androidTestImplementation(project(path = Modules.core, configuration = TestConfigurations.androidTestImplementation))
+    }
 }

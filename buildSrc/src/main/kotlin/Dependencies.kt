@@ -22,4 +22,9 @@ object Dependencies {
     object Modules {
         const val core = ":core"
     }
+
+    object TestConfigurations {
+        const val testImplementation = "testImplementationDependencies"
+        const val androidTestImplementation = "androidTestImplementationDependencies"
+    }
 }

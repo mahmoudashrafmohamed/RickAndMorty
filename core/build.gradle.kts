@@ -1,10 +1,20 @@
 import Dependencies.AndroidX
 import Dependencies.Kotlin
 import Dependencies.Test
+import Dependencies.TestConfigurations
 
 plugins {
     id(Plugins.androidLib)
     id(Plugins.kotlinAndroid)
+}
+
+configurations {
+    create(TestConfigurations.testImplementation){
+        extendsFrom(configurations.testImplementation.get())
+    }
+    create(TestConfigurations.androidTestImplementation){
+        extendsFrom(configurations.androidTestImplementation.get())
+    }
 }
 
 android {
@@ -36,16 +46,18 @@ android {
 
 dependencies {
 
-    implementation(AndroidX.CoreKtx)
-    implementation(AndroidX.AppCompat)
-    implementation(AndroidX.Material)
-    implementation(AndroidX.ConstraintLayout)
+    // Core Dependencies
+    api(Kotlin.Stdlib)
+    api(AndroidX.CoreKtx)
+    api(AndroidX.AppCompat)
+    api(AndroidX.Material)
+    api(AndroidX.ConstraintLayout)
 
-    implementation(Kotlin.Stdlib)
-    implementation(Kotlin.Coroutines)
+    // Coroutines
+    api(Kotlin.Coroutines)
 
+    // Test Dependencies
     testImplementation(Test.Junit)
-
     androidTestImplementation(Test.JunitExt)
     androidTestImplementation(Test.EspressoCore)
 }
