@@ -56,6 +56,8 @@ dependencies {
     api(AndroidX.AppCompat)
     api(AndroidX.Material)
     api(AndroidX.ConstraintLayout)
+    api(AndroidX.NavigationUiKtx)
+    api(AndroidX.ActivityKtx)
 
     // Coroutines
     api(Kotlin.Coroutines)
