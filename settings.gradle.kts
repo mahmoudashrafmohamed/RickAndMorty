@@ -3,3 +3,4 @@ rootProject.name = "Android Gradle KTS"
 include(":app")
 include(":core")
 include(":features:splash")
+include(":features:home")
