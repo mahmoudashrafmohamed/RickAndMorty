@@ -43,6 +43,7 @@ android {
 }
 
 dependencies {
+    implementation(project(Modules.splash))
     implementation(project(Modules.core)) {
         testImplementation(project(path = Modules.core, configuration = TestConfigurations.testImplementation))
         androidTestImplementation(project(path = Modules.core, configuration = TestConfigurations.androidTestImplementation))

@@ -74,4 +74,7 @@ dependencies {
     testImplementation(Test.Junit)
     androidTestImplementation(Test.JunitExt)
     androidTestImplementation(Test.EspressoCore)
+
+    api (AndroidX.LifecycleKTX)
+
 }

@@ -10,6 +10,7 @@ object Dependencies {
         const val ConstraintLayout = "androidx.constraintlayout:constraintlayout:${Versions.constraintLayout}"
         const val CoreKtx = "androidx.core:core-ktx:${Versions.coreKTX}"
         const val Material = "com.google.android.material:material:${Versions.material}"
+        const val LifecycleKTX = "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.lifecycle}"
     }
 
     object DaggerHilt {
@@ -33,6 +34,7 @@ object Dependencies {
 
     object Modules {
         const val core = ":core"
+        const val splash = ":features:splash"
     }
 
     object TestConfigurations {
