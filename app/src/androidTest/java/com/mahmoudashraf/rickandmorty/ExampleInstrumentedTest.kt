@@ -1,4 +1,4 @@
-package com.mahmoud_ashraf.rickandmorty
+package com.mahmoudashraf.rickandmorty
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

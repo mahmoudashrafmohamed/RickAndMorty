@@ -1,4 +1,4 @@
-package com.mahmoud_ashraf.rickandmorty
+package com.mahmoudashraf.rickandmorty
 
 import org.junit.Test
 

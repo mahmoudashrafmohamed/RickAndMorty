@@ -1,4 +1,4 @@
-package com.mahmoud_ashraf.rickandmorty
+package com.mahmoudashraf.rickandmorty
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp
