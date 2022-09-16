@@ -58,6 +58,9 @@ dependencies {
     api(AndroidX.ConstraintLayout)
     api(AndroidX.NavigationUiKtx)
     api(AndroidX.ActivityKtx)
+    api(AndroidX.NavigationFragment)
+    api(AndroidX.LifecycleViewModel)
+
 
     // Coroutines
     api(Kotlin.Coroutines)

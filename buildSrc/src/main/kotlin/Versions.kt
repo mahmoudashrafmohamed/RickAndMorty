@@ -17,5 +17,6 @@ object Versions {
     const val jUnitExt = "1.1.3"
     const val CheckDependencyUpdates = "1.5.0"
     const val navUiKtx = "2.3.0"
+    const val navFragment = "2.3.0"
     const val activityKtx = "1.1.0"
 }

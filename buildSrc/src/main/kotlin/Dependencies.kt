@@ -12,7 +12,9 @@ object Dependencies {
         const val Material = "com.google.android.material:material:${Versions.material}"
         const val LifecycleKTX = "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.lifecycle}"
         const val NavigationUiKtx = "androidx.navigation:navigation-ui-ktx:${Versions.navUiKtx}"
+        const val NavigationFragment = "androidx.navigation:navigation-fragment:${Versions.navFragment}"
         const val ActivityKtx = "androidx.activity:activity-ktx:${Versions.activityKtx}"
+        const val LifecycleViewModel = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.lifecycle}"
     }
 
     object DaggerHilt {
