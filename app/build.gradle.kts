@@ -4,8 +4,10 @@ import Dependencies.TestConfigurations
 plugins {
     id(Plugins.android)
     id(Plugins.kotlinAndroid)
+    id(Plugins.daggerHilt)
     id(Plugins.kotlinKapt)
     id(Plugins.checkDependencyUpdates) version Versions.CheckDependencyUpdates
+
 }
 
 android {
@@ -49,4 +51,9 @@ dependencies {
         testImplementation(project(path = Modules.core, configuration = TestConfigurations.testImplementation))
         androidTestImplementation(project(path = Modules.core, configuration = TestConfigurations.androidTestImplementation))
     }
+    // Dagger-Hilt
+    implementation (Dependencies.DaggerHilt.hiltAndroid)
+    kapt(Dependencies.DaggerHilt.hiltKapt)
+    implementation ("androidx.hilt:hilt-navigation:1.0.0")
+    implementation ("androidx.hilt:hilt-navigation-fragment:1.0.0")
 }

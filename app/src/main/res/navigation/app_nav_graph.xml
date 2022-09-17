@@ -9,6 +9,11 @@
         android:id="@+id/splashFragment"
         android:name="com.mahmoudashraf.splash.SplashFragment"
         tools:layout="@layout/fragment_splash">
+    </fragment>
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.mahmoudashraf.home.HomeFragment"
+        tools:layout="@layout/fragment_home">
 
     </fragment>
 

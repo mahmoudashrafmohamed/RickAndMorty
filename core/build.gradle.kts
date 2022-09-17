@@ -9,6 +9,7 @@ plugins {
     id(Plugins.androidLib)
     id(Plugins.kotlinAndroid)
     id(Plugins.daggerHilt)
+
     id(Plugins.kotlinKapt)
 }
 
@@ -65,10 +66,7 @@ dependencies {
     // Coroutines
     api(Kotlin.Coroutines)
 
-    // Dagger-Hilt
-    api (DaggerHilt.hiltAndroid)
-    api (DaggerHilt.hiltViewModel)
-    kapt(DaggerHilt.hiltKapt)
+
 
     // Retrofit
     api(Retrofit.retrofit)
@@ -81,5 +79,11 @@ dependencies {
     androidTestImplementation(Test.EspressoCore)
 
     api (AndroidX.LifecycleKTX)
+    // Dagger-Hilt
+    implementation (DaggerHilt.hiltAndroid)
+
+    kapt(DaggerHilt.hiltKapt)
+    implementation ("androidx.hilt:hilt-navigation:1.0.0")
+    implementation ("androidx.hilt:hilt-navigation-fragment:1.0.0")
 
 }
