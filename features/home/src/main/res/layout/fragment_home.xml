@@ -3,12 +3,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/black"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".HomeFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <com.skydoves.androidveil.VeilRecyclerFrameView
+        android:id="@+id/veilRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        app:veilFrame_layout="@layout/item_character"
+        app:veilFrame_radius="4dp"
+        app:veilFrame_shimmerEnable="true"
+        app:veilFrame_veiled="true" />
 
 </FrameLayout>
