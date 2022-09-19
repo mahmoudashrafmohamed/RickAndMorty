@@ -12,9 +12,9 @@ import dagger.hilt.android.components.ActivityComponent
 @Module
 @InstallIn(ActivityComponent::class)
 object NavControllerModule {
-    @Provides
-    fun navController(activity: FragmentActivity): NavController {
-        val navHostFragment = activity.supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-        return navHostFragment.navController
-    }
+  @Provides
+  fun navController(activity: FragmentActivity): NavController {
+    val navHostFragment = activity.supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+    return navHostFragment.navController
+  }
 }

@@ -8,6 +8,7 @@ object Versions {
     const val constraintLayout = "2.1.4"
     const val coreKTX = "1.6.0"
     const val hilt = "2.42"
+    const val ANDROID_GRADLE_SPOTLESS = "6.7.0"
     const val hiltViewModel = "1.0.0-alpha03"
     const val retrofit = "2.9.0"
     const val gson = "2.9.0"

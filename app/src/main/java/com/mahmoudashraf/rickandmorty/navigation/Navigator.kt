@@ -10,14 +10,10 @@ import javax.inject.Inject
 
 @ActivityScoped
 class Navigator @Inject constructor(
-    private val navController: NavController,
+  private val navController: NavController
 ) : SplashActions {
-    override fun navigateToHome(someArg: String) {
-        Log.e("sasasas", "000000000000000000000000")
-        navController.navigate(R.id.homeFragment, Bundle()) // todo add create bundle
-    }
+  override fun navigateToHome(someArg: String) {
+    Log.e("sasasas", "000000000000000000000000")
+    navController.navigate(R.id.homeFragment, Bundle()) // todo add create bundle
+  }
 }
-
-
-
-

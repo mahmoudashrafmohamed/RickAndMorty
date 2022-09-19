@@ -10,6 +10,6 @@ import dagger.hilt.android.components.ActivityComponent
 @Module
 @InstallIn(ActivityComponent::class)
 abstract class ActionsModule {
-    @Binds
-    abstract fun splash(navigator: Navigator): SplashActions
+  @Binds
+  abstract fun splash(navigator: Navigator): SplashActions
 }

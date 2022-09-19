@@ -8,7 +8,13 @@ buildscript {
         classpath(GradleConfig.Android)
         classpath(GradleConfig.Kotlin)
         classpath(GradleConfig.hilt)
+        classpath(GradleConfig.spotlessGradlePlugin)
     }
+
+}
+
+subprojects {
+    apply(from = "$rootDir/spotless/spotless.gradle")
 }
 
 allprojects {
