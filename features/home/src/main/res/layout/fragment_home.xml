@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/black"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".HomeFragment">
 
@@ -13,6 +12,10 @@
         android:layout_height="match_parent"
         app:veilFrame_layout="@layout/item_character"
         app:veilFrame_radius="4dp"
+        app:veilFrame_baseAlpha="0.6"
+        app:veilFrame_baseColor="@android:color/holo_green_dark"
+        app:veilFrame_highlightAlpha="1.0"
+        app:veilFrame_highlightColor="@android:color/holo_green_light"
         app:veilFrame_shimmerEnable="true"
         app:veilFrame_veiled="true" />
 
