@@ -4,6 +4,7 @@ import Dependencies.Test
 import Dependencies.TestConfigurations
 import Dependencies.DaggerHilt
 import Dependencies.Retrofit
+import Dependencies.Skeleton
 
 plugins {
     id(Plugins.androidLib)
@@ -65,9 +66,8 @@ dependencies {
 
     // Coroutines
     api(Kotlin.Coroutines)
-
-
-
+    // skeleton
+    api( Skeleton.Androidveil)
     // Retrofit
     api(Retrofit.retrofit)
     api(Retrofit.gson)

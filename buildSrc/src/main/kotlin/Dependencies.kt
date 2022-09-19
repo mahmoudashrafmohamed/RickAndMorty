@@ -29,6 +29,10 @@ object Dependencies {
         const val loggingInterceptor = "com.squareup.okhttp3:logging-interceptor:${Versions.loggingInterceptor}"
     }
 
+    object Skeleton {
+       const val Androidveil = "com.github.skydoves:androidveil:${Versions.androidVeil}"
+    }
+
     object Test {
         const val EspressoCore = "androidx.test.espresso:espresso-core:${Versions.espressoCore}"
 
