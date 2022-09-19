@@ -16,24 +16,24 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class SplashFragment : Fragment() {
 
-    @Inject
-    lateinit var splashActions: SplashActions
+  @Inject
+  lateinit var splashActions: SplashActions
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_splash, container, false)
+  override fun onCreateView(
+    inflater: LayoutInflater,
+    container: ViewGroup?,
+    savedInstanceState: Bundle?
+  ): View? {
+    return inflater.inflate(R.layout.fragment_splash, container, false)
+  }
+
+  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    super.onViewCreated(view, savedInstanceState)
+    viewLifecycleOwner.lifecycleScope.launch {
+      repeatOnLifecycle(Lifecycle.State.STARTED) {
+        delay(2000)
+        splashActions.navigateToHome("mahmoud.......")
+      }
     }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        viewLifecycleOwner.lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                delay(2000)
-                splashActions.navigateToHome("mahmoud.......")
-            }
-        }
-    }
-
+  }
 }

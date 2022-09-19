@@ -1,4 +1,3 @@
 package com.mahmoudashraf.core
 
-class DeleteThis {
-}
+class DeleteThis
