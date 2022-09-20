@@ -14,6 +14,7 @@ class Navigator @Inject constructor(
 ) : SplashActions {
   override fun navigateToHome(someArg: String) {
     Log.e("sasasas", "000000000000000000000000")
+    navController.popBackStack()
     navController.navigate(R.id.homeFragment, Bundle()) // todo add create bundle
   }
 }
