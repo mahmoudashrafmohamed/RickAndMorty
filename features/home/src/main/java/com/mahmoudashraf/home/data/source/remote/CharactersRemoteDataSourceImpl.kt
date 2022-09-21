@@ -1,7 +1,9 @@
 package com.mahmoudashraf.home.data.source.remote
 
-class CharactersRemoteDataSourceImpl : CharactersRemoteDataSource {
+import javax.inject.Inject
+
+class CharactersRemoteDataSourceImpl @Inject constructor(private val charactersService: CharactersService) : CharactersRemoteDataSource {
     override suspend fun getCharacters(): List<Any> {
-        return listOf()
+        return charactersService.getCharacters()
     }
 }
