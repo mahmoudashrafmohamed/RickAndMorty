@@ -1,9 +1,12 @@
 import Dependencies.Modules
 import Dependencies.TestConfigurations
+import Dependencies.DaggerHilt
 
 plugins {
     id("com.android.library")
-    id("org.jetbrains.kotlin.android")
+    id(Plugins.kotlinAndroid)
+    id(Plugins.daggerHilt)
+    id(Plugins.kotlinKapt)
 }
 
 android {
@@ -43,4 +46,7 @@ dependencies {
         testImplementation(project(path = Modules.core, configuration = TestConfigurations.testImplementation))
         androidTestImplementation(project(path = Modules.core, configuration = TestConfigurations.androidTestImplementation))
     }
+    // Dagger-Hilt
+    implementation (DaggerHilt.hiltAndroid)
+    kapt(DaggerHilt.hiltKapt)
 }
