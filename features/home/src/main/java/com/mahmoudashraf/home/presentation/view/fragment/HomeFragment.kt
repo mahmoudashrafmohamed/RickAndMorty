@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mahmoudashraf.core.viewbinding.viewBinding
 import com.mahmoudashraf.home.R
@@ -23,9 +24,9 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     binding.veilRecyclerView.run {
       setVeilLayout(R.layout.item_character)
      // setAdapter(adapter)
-      setLayoutManager(LinearLayoutManager(context))
+      setLayoutManager(GridLayoutManager(context,2))
       addVeiledItems(15)
-      viewModel.call()
+     // viewModel.call()
     }
   }
 }
