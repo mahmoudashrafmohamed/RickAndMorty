@@ -4,6 +4,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.mahmoudashraf.core.base.BaseAdapter
 import com.mahmoudashraf.core.viewbinding.viewBinding
 import com.mahmoudashraf.home.databinding.ItemCharacterBinding
@@ -31,6 +32,7 @@ class CharactersListAdapter : BaseAdapter<Character>() {
         override fun bind(item: Character) {
             binding.apply {
                 tvCharacterName.text = item.name
+                Glide.with(imgCharacter).load(item.image).into(imgCharacter)
                 root.setOnClickListener {
                     onItemClickListener?.let { itemClick ->
                         itemClick(item)

@@ -68,6 +68,8 @@ dependencies {
     api(AndroidX.NavigationFragment)
     api(AndroidX.LifecycleViewModel)
     api(AndroidX.FragmentKtx)
+    api(AndroidX.LifecycleKTX)
+
 
 
 
@@ -79,13 +81,15 @@ dependencies {
     api(Retrofit.retrofit)
     api(Retrofit.gson)
     api(Retrofit.loggingInterceptor)
+    // Glide
+    api(Dependencies.Glide.glide)
+    kapt(Dependencies.Glide.glideKapt)
 
     // Test Dependencies
     testImplementation(Test.Junit)
     androidTestImplementation(Test.JunitExt)
     androidTestImplementation(Test.EspressoCore)
 
-    api(AndroidX.LifecycleKTX)
     // Dagger-Hilt
     implementation(DaggerHilt.hiltAndroid)
 

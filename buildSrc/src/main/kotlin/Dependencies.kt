@@ -30,6 +30,11 @@ object Dependencies {
         const val loggingInterceptor = "com.squareup.okhttp3:logging-interceptor:${Versions.loggingInterceptor}"
     }
 
+    object Glide {
+        const val glide = "com.github.bumptech.glide:glide:${Versions.glideVersion}"
+        const val glideKapt = "com.github.bumptech.glide:compiler:${Versions.glideVersion}"
+    }
+
     object Skeleton {
        const val Androidveil = "com.github.skydoves:androidveil:${Versions.androidVeil}"
     }
