@@ -15,10 +15,10 @@ plugins {
 }
 
 configurations {
-    create(TestConfigurations.testImplementation){
+    create(TestConfigurations.testImplementation) {
         extendsFrom(configurations.testImplementation.get())
     }
-    create(TestConfigurations.androidTestImplementation){
+    create(TestConfigurations.androidTestImplementation) {
         extendsFrom(configurations.androidTestImplementation.get())
     }
 }
@@ -33,6 +33,10 @@ android {
     }
 
     buildTypes {
+        debug {
+            buildConfigField("String", "BASE_URL", "\"" + LocalProperties.baseUrl + "\"")
+
+        }
         release {
             isMinifyEnabled = false
             proguardFiles(
@@ -52,6 +56,7 @@ android {
 
 dependencies {
 
+    api(project(Dependencies.Modules.entities))
     // Core Dependencies
     api(Kotlin.Stdlib)
     api(AndroidX.CoreKtx)
@@ -67,7 +72,7 @@ dependencies {
     // Coroutines
     api(Kotlin.Coroutines)
     // skeleton
-    api( Skeleton.Androidveil)
+    api(Skeleton.Androidveil)
     // Retrofit
     api(Retrofit.retrofit)
     api(Retrofit.gson)
@@ -78,12 +83,12 @@ dependencies {
     androidTestImplementation(Test.JunitExt)
     androidTestImplementation(Test.EspressoCore)
 
-    api (AndroidX.LifecycleKTX)
+    api(AndroidX.LifecycleKTX)
     // Dagger-Hilt
-    implementation (DaggerHilt.hiltAndroid)
+    implementation(DaggerHilt.hiltAndroid)
 
     kapt(DaggerHilt.hiltKapt)
-    implementation ("androidx.hilt:hilt-navigation:1.0.0")
-    implementation ("androidx.hilt:hilt-navigation-fragment:1.0.0")
+    implementation("androidx.hilt:hilt-navigation:1.0.0")
+    implementation("androidx.hilt:hilt-navigation-fragment:1.0.0")
 
 }

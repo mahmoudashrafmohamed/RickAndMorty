@@ -7,7 +7,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
-object ServiceFactory {
+object ApiServiceFactory {
 
     inline fun <reified T> create(isDebug: Boolean, baseUrl: String): T {
         val retrofit = createRetrofit(isDebug, baseUrl)
@@ -34,7 +34,7 @@ object ServiceFactory {
     private fun createLoggingInterceptor(isDebug: Boolean): HttpLoggingInterceptor {
         return HttpLoggingInterceptor().apply {
             level = if (isDebug) {
-                HttpLoggingInterceptor.Level.BASIC
+                HttpLoggingInterceptor.Level.BODY
             } else {
                 HttpLoggingInterceptor.Level.NONE
             }

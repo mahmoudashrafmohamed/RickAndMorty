@@ -42,6 +42,7 @@ object Dependencies {
 
     object Modules {
         const val core = ":core"
+        const val entities = ":entities"
         const val splash = ":features:splash"
         const val home = ":features:home"
     }

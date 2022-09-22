@@ -1,8 +1,7 @@
 package com.mahmoudashraf.home.data.di
 
-import com.mahmoudashraf.core.data.remote.ServiceFactory
-import com.mahmoudashraf.core.data.remote.ServiceFactory.create
-import com.mahmoudashraf.home.BuildConfig
+import com.mahmoudashraf.core.BuildConfig
+import com.mahmoudashraf.core.data.remote.ApiServiceFactory
 import com.mahmoudashraf.home.data.source.remote.CharactersService
 import dagger.Module
 import dagger.Provides
@@ -16,6 +15,6 @@ class RemoteModule {
     @Provides
     @Singleton
     fun provideBlogService(): CharactersService {
-        return create(BuildConfig.DEBUG, "BuildConfig.BASE_URL")
+        return ApiServiceFactory.create(BuildConfig.DEBUG, BuildConfig.BASE_URL)
     }
 }
