@@ -67,6 +67,8 @@ dependencies {
     api(AndroidX.ActivityKtx)
     api(AndroidX.NavigationFragment)
     api(AndroidX.LifecycleViewModel)
+    api(AndroidX.FragmentKtx)
+
 
 
     // Coroutines

@@ -10,6 +10,10 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(private val interActor: CharactersListInterActor) : ViewModel() {
+    fun call() {
+
+    }
+
     init {
         viewModelScope.launch {
             interActor.getCharacters().collect {

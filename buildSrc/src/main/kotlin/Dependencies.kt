@@ -15,6 +15,7 @@ object Dependencies {
         const val NavigationFragment = "androidx.navigation:navigation-fragment:${Versions.navFragment}"
         const val ActivityKtx = "androidx.activity:activity-ktx:${Versions.activityKtx}"
         const val LifecycleViewModel = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.lifecycle}"
+        const val FragmentKtx = "androidx.navigation:navigation-fragment-ktx:${Versions.fragmentKtx}"
     }
 
     object DaggerHilt {
