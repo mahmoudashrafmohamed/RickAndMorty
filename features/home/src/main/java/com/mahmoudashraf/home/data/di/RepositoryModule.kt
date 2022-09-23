@@ -11,7 +11,7 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 abstract class RepositoryModule {
-    @Singleton
-    @Binds
-    abstract fun bindCharactersRepository(impl: CharactersRepositoryImpl): CharactersRepository
+  @Singleton
+  @Binds
+  abstract fun bindCharactersRepository(impl: CharactersRepositoryImpl): CharactersRepository
 }

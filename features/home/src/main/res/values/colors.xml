@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="skeleton_color">#dddddd</color>
+    <color name="skeleton_color_light">#F1F2F3</color>
+</resources>

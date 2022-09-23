@@ -23,51 +23,51 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class HomeFragment : Fragment(R.layout.fragment_home) {
 
-    private val binding by viewBinding(FragmentHomeBinding::bind)
-    private val viewModel: HomeViewModel by viewModels()
-    private val adapter by lazy { CharactersListAdapter() }
+  private val binding by viewBinding(FragmentHomeBinding::bind)
+  private val viewModel: HomeViewModel by viewModels()
+  private val adapter by lazy { CharactersListAdapter() }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        initView()
+  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    super.onViewCreated(view, savedInstanceState)
+    initView()
+  }
+
+  private fun initView() {
+    // sets VeilRecyclerView's properties
+    binding.veilRecyclerView.run {
+      setVeilLayout(R.layout.item_character)
+      setAdapter(adapter)
+      setLayoutManager(GridLayoutManager(context, 2))
+      addVeiledItems(15)
+      observeScreenState()
+      viewModel.getCharacters()
     }
+    adapter.setItemClickListener {
+      Log.e("clicked", "" + it.name)
+    }
+  }
 
-    private fun initView() {
-        // sets VeilRecyclerView's properties
-        binding.veilRecyclerView.run {
-            setVeilLayout(R.layout.item_character)
-            setAdapter(adapter)
-            setLayoutManager(GridLayoutManager(context, 2))
-            addVeiledItems(15)
-            observeScreenState()
-            viewModel.getCharacters()
+  private fun observeScreenState() {
+    viewLifecycleOwner.lifecycleScope.launch {
+      repeatOnLifecycle(Lifecycle.State.STARTED) {
+        viewModel.characters.collect { state ->
+          when (state) {
+            is HomeScreenState.Initial -> Unit
+            is HomeScreenState.Loading -> binding.veilRecyclerView.veil()
+            is HomeScreenState.Success -> handleSuccessState(state.characters)
+            is HomeScreenState.Error -> Toast.makeText(
+              context,
+              state.msg,
+              Toast.LENGTH_LONG
+            ).show()
+          }
         }
-        adapter.setItemClickListener {
-            Log.e("clicked", "" + it.name)
-        }
+      }
     }
+  }
 
-    private fun observeScreenState() {
-        viewLifecycleOwner.lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.characters.collect { state ->
-                    when (state) {
-                        is HomeScreenState.Loading -> binding.veilRecyclerView.veil()
-                        is HomeScreenState.Success -> handleSuccessState(state.characters)
-                        is HomeScreenState.Error -> Toast.makeText(
-                            context,
-                            state.msg,
-                            Toast.LENGTH_LONG
-                        ).show()
-                        else -> Unit
-                    }
-                }
-            }
-        }
-    }
-
-    private fun handleSuccessState(characters: List<Character>) {
-        binding.veilRecyclerView.unVeil()
-        adapter.list = characters
-    }
+  private fun handleSuccessState(characters: List<Character>) {
+    binding.veilRecyclerView.unVeil()
+    adapter.list = characters
+  }
 }

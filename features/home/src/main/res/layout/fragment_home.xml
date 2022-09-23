@@ -12,10 +12,10 @@
         android:layout_height="match_parent"
         app:veilFrame_layout="@layout/item_character"
         app:veilFrame_radius="4dp"
-        app:veilFrame_baseAlpha="0.6"
-        app:veilFrame_baseColor="@android:color/holo_green_dark"
-        app:veilFrame_highlightAlpha="1.0"
-        app:veilFrame_highlightColor="@android:color/holo_green_light"
+        app:veilFrame_baseAlpha="0.5"
+        app:veilFrame_baseColor="@color/skeleton_color"
+        app:veilFrame_highlightAlpha="0.5"
+        app:veilFrame_highlightColor="@color/skeleton_color_light"
         app:veilFrame_shimmerEnable="true"
         app:veilFrame_veiled="true" />
 

@@ -12,33 +12,33 @@ import com.orcas.entities.home.Character
 
 class CharactersListAdapter : BaseAdapter<Character>() {
 
-    private val diffCallback = object : DiffUtil.ItemCallback<Character>() {
-        override fun areItemsTheSame(oldItem: Character, newItem: Character): Boolean {
-            return oldItem.id == newItem.id
-        }
-        override fun areContentsTheSame(oldItem: Character, newItem: Character): Boolean {
-            return oldItem.hashCode() == newItem.hashCode()
-        }
+  private val diffCallback = object : DiffUtil.ItemCallback<Character>() {
+    override fun areItemsTheSame(oldItem: Character, newItem: Character): Boolean {
+      return oldItem.id == newItem.id
     }
-
-    override val differ = AsyncListDiffer(this, diffCallback)
-
-    override fun getViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val binding = parent.viewBinding(ItemCharacterBinding::inflate)
-        return CharacterViewHolder(binding)
+    override fun areContentsTheSame(oldItem: Character, newItem: Character): Boolean {
+      return oldItem.hashCode() == newItem.hashCode()
     }
+  }
 
-   inner class CharacterViewHolder(private val binding: ItemCharacterBinding) : RecyclerView.ViewHolder(binding.root), Binder<Character> {
-        override fun bind(item: Character) {
-            binding.apply {
-                tvCharacterName.text = item.name
-                Glide.with(imgCharacter).load(item.image).into(imgCharacter)
-                root.setOnClickListener {
-                    onItemClickListener?.let { itemClick ->
-                        itemClick(item)
-                    }
-                }
-            }
+  override val differ = AsyncListDiffer(this, diffCallback)
+
+  override fun getViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+    val binding = parent.viewBinding(ItemCharacterBinding::inflate)
+    return CharacterViewHolder(binding)
+  }
+
+  inner class CharacterViewHolder(private val binding: ItemCharacterBinding) : RecyclerView.ViewHolder(binding.root), Binder<Character> {
+    override fun bind(item: Character) {
+      binding.apply {
+        tvCharacterName.text = item.name
+        Glide.with(imgCharacter).load(item.image).into(imgCharacter)
+        root.setOnClickListener {
+          onItemClickListener?.let { itemClick ->
+            itemClick(item)
+          }
         }
+      }
     }
+  }
 }

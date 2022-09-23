@@ -13,30 +13,29 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(private val interActor: CharactersListInterActor) :
-    ViewModel() {
+  ViewModel() {
 
-    private val _characters = MutableStateFlow<HomeScreenState>(HomeScreenState.Initial)
-    val characters : StateFlow<HomeScreenState> = _characters
+  private val _characters = MutableStateFlow<HomeScreenState>(HomeScreenState.Initial)
+  val characters: StateFlow<HomeScreenState> = _characters
 
-
-     fun getCharacters() {
-        _characters.value = HomeScreenState.Loading
-        viewModelScope.launch {
-            interActor.getCharacters()
-                .catch {t->
-                    t.printStackTrace()
-                    _characters.value = HomeScreenState.Error(t.message?:"error!")
-                }
-                .collect {
-                    _characters.value = HomeScreenState.Success(it.data)
-                }
+  fun getCharacters() {
+    _characters.value = HomeScreenState.Loading
+    viewModelScope.launch {
+      interActor.getCharacters()
+        .catch { t ->
+          t.printStackTrace()
+          _characters.value = HomeScreenState.Error(t.message ?: "error!")
+        }
+        .collect {
+          _characters.value = HomeScreenState.Success(it.data)
         }
     }
+  }
 }
 
 sealed class HomeScreenState {
-    object Initial : HomeScreenState()
-    object Loading : HomeScreenState()
-    data class Success(val characters: List<Character>) : HomeScreenState()
-    data class Error(val msg : String) : HomeScreenState()
+  object Initial : HomeScreenState()
+  object Loading : HomeScreenState()
+  data class Success(val characters: List<Character>) : HomeScreenState()
+  data class Error(val msg: String) : HomeScreenState()
 }
