@@ -1,5 +1,6 @@
 package com.mahmoudashraf.home.presentation.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mahmoudashraf.home.domain.interactor.CharactersListInterActor
@@ -18,7 +19,12 @@ class HomeViewModel @Inject constructor(private val interActor: CharactersListIn
   private val _characters = MutableStateFlow<HomeScreenState>(HomeScreenState.Initial)
   val characters: StateFlow<HomeScreenState> = _characters
 
-  fun getCharacters() {
+  init {
+      getCharacters()
+  }
+
+  private fun getCharacters() {
+    Log.e("fetch,","........")
     _characters.value = HomeScreenState.Loading
     viewModelScope.launch {
       interActor.getCharacters()

@@ -40,7 +40,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
       setLayoutManager(GridLayoutManager(context, 2))
       addVeiledItems(15)
       observeScreenState()
-      viewModel.getCharacters()
     }
     adapter.setItemClickListener {
       Log.e("clicked", "" + it.name)
@@ -53,21 +52,34 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         viewModel.characters.collect { state ->
           when (state) {
             is HomeScreenState.Initial -> Unit
-            is HomeScreenState.Loading -> binding.veilRecyclerView.veil()
+            is HomeScreenState.Loading -> showLoading()
             is HomeScreenState.Success -> handleSuccessState(state.characters)
-            is HomeScreenState.Error -> Toast.makeText(
-              context,
-              state.msg,
-              Toast.LENGTH_LONG
-            ).show()
+            is HomeScreenState.Error -> handleErrorState(state)
           }
         }
       }
     }
   }
 
-  private fun handleSuccessState(characters: List<Character>) {
+  private fun handleErrorState(state: HomeScreenState.Error) {
+    Toast.makeText(
+      context,
+      state.msg,
+      Toast.LENGTH_LONG
+    ).show()
+  }
+
+  private fun showLoading() {
+    binding.veilRecyclerView.veil()
+  }
+
+  private fun hideLoading() {
     binding.veilRecyclerView.unVeil()
+  }
+
+  private fun handleSuccessState(characters: List<Character>) {
+    hideLoading()
     adapter.list = characters
   }
+
 }
