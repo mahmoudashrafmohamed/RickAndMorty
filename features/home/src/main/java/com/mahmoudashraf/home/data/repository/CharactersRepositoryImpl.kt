@@ -11,6 +11,9 @@ class CharactersRepositoryImpl @Inject constructor(
     private val charactersRemoteDataSource: CharactersRemoteDataSource
 ) : CharactersRepository {
     override suspend fun getCharacters(): Flow<CharacterResponse> {
-        return flow { charactersRemoteDataSource.getCharacters() }
+        return flow {
+            val response = charactersRemoteDataSource.getCharacters()
+            emit(response)
+        }
     }
 }
