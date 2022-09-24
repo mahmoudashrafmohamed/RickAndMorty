@@ -1,6 +1,13 @@
+import Dependencies.Modules
+import Dependencies.TestConfigurations
+import Dependencies.DaggerHilt
+import Dependencies.TestConfigurations.androidTestImplementation
+import Dependencies.TestConfigurations.testImplementation
+
 plugins {
-    id("com.android.library")
-    id("org.jetbrains.kotlin.android")
+    id(Plugins.androidLib)
+    id(Plugins.kotlinAndroid)
+    id(Plugins.kotlinKapt)
 }
 
 android {
@@ -30,14 +37,19 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    buildFeatures {
+        viewBinding = true
+    }
 }
 
 dependencies {
-
-    implementation("androidx.core:core-ktx:1.7.0")
-    implementation("androidx.appcompat:appcompat:1.5.1")
-    implementation("com.google.android.material:material:1.6.1")
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.3")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
+    implementation(project(Modules.core)) {
+        testImplementation(project(path = Modules.core, configuration = TestConfigurations.testImplementation))
+        androidTestImplementation(project(path = Modules.core, configuration = TestConfigurations.androidTestImplementation))
+        testImplementation( "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6")
+        testImplementation( "org.mockito:mockito-core:3.2.4")
+        androidTestImplementation ("org.mockito:mockito-android:3.2.4")
+        testImplementation ("org.mockito:mockito-inline:2.28.2")
+        testImplementation( "com.nhaarman:mockito-kotlin:1.6.0")
+    }
 }
