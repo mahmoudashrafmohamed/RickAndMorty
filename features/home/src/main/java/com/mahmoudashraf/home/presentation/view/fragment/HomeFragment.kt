@@ -49,7 +49,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
   private fun observeScreenState() {
     viewLifecycleOwner.lifecycleScope.launch {
       repeatOnLifecycle(Lifecycle.State.STARTED) {
-        viewModel.characters.collect { state ->
+        viewModel.uiState.collect { state ->
           when (state) {
             is HomeScreenState.Initial -> Unit
             is HomeScreenState.Loading -> showLoading()

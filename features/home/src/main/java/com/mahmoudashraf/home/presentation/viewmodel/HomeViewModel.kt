@@ -1,6 +1,5 @@
 package com.mahmoudashraf.home.presentation.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mahmoudashraf.home.domain.interactor.CharactersListInterActor
@@ -14,34 +13,33 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(private val interActor: CharactersListInterActor) :
-  ViewModel() {
+    ViewModel() {
 
-  private val _characters = MutableStateFlow<HomeScreenState>(HomeScreenState.Initial)
-  val characters: StateFlow<HomeScreenState> = _characters
+    private val _uiState = MutableStateFlow<HomeScreenState>(HomeScreenState.Initial)
+    val uiState: StateFlow<HomeScreenState> = _uiState
 
-  init {
-      getCharacters()
-  }
+    init {
+        getCharacters()
+    }
 
-  private fun getCharacters() {
-    Log.e("fetch,","........")
-    _characters.value = HomeScreenState.Loading
-    viewModelScope.launch {
-      interActor.getCharacters()
-        .catch { t ->
-          t.printStackTrace()
-          _characters.value = HomeScreenState.Error(t.message ?: "error!")
-        }
-        .collect {
-          _characters.value = HomeScreenState.Success(it.data)
+    fun getCharacters() {
+        _uiState.value = HomeScreenState.Loading
+        viewModelScope.launch {
+            interActor.getCharacters()
+                .catch { t ->
+                    t.printStackTrace()
+                    _uiState.value = HomeScreenState.Error(t.message ?: "error!")
+                }
+                .collect {
+                    _uiState.value = HomeScreenState.Success(it.data)
+                }
         }
     }
-  }
 }
 
 sealed class HomeScreenState {
-  object Initial : HomeScreenState()
-  object Loading : HomeScreenState()
-  data class Success(val characters: List<Character>) : HomeScreenState()
-  data class Error(val msg: String) : HomeScreenState()
+    object Initial : HomeScreenState()
+    object Loading : HomeScreenState()
+    data class Success(val characters: List<Character>) : HomeScreenState()
+    data class Error(val msg: String) : HomeScreenState()
 }
