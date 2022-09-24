@@ -1,7 +1,6 @@
 package com.mahmoudashraf.home.presentation.view.fragment
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -14,11 +13,13 @@ import com.mahmoudashraf.core.viewbinding.viewBinding
 import com.mahmoudashraf.home.R
 import com.mahmoudashraf.home.databinding.FragmentHomeBinding
 import com.mahmoudashraf.home.presentation.view.adapter.CharactersListAdapter
+import com.mahmoudashraf.home.presentation.view.navigation.HomeActions
 import com.mahmoudashraf.home.presentation.viewmodel.HomeScreenState
 import com.mahmoudashraf.home.presentation.viewmodel.HomeViewModel
 import com.orcas.entities.home.Character
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class HomeFragment : Fragment(R.layout.fragment_home) {
@@ -26,6 +27,8 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
   private val binding by viewBinding(FragmentHomeBinding::bind)
   private val viewModel: HomeViewModel by viewModels()
   private val adapter by lazy { CharactersListAdapter() }
+  @Inject
+  lateinit var homeActions: HomeActions
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
@@ -42,7 +45,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
       observeScreenState()
     }
     adapter.setItemClickListener {
-      Log.e("clicked", "" + it.name)
+      homeActions.navigateToDetails(it)
     }
   }
 

@@ -7,6 +7,7 @@ import Dependencies.TestConfigurations.testImplementation
 plugins {
     id(Plugins.androidLib)
     id(Plugins.kotlinAndroid)
+    id(Plugins.daggerHilt)
     id(Plugins.kotlinKapt)
 }
 
@@ -52,4 +53,7 @@ dependencies {
         testImplementation ("org.mockito:mockito-inline:2.28.2")
         testImplementation( "com.nhaarman:mockito-kotlin:1.6.0")
     }
+    // Dagger-Hilt
+    implementation (DaggerHilt.hiltAndroid)
+    kapt(DaggerHilt.hiltKapt)
 }
