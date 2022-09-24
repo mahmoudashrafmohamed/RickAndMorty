@@ -96,4 +96,8 @@ dependencies {
     implementation("androidx.hilt:hilt-navigation:1.0.0")
     implementation("androidx.hilt:hilt-navigation-fragment:1.0.0")
 
+    implementation("com.github.ihsanbal:LoggingInterceptor:3.1.0") {
+        exclude(group =  "org.json", module = "json")
+    }
+
 }

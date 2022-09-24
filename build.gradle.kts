@@ -3,6 +3,7 @@ buildscript {
     repositories {
         google()
         mavenCentral()
+        maven ( url = "https://jitpack.io" )
     }
     dependencies {
         classpath(GradleConfig.Android)
@@ -22,6 +23,8 @@ allprojects {
     repositories {
         google()
         mavenCentral()
+        maven ( url ="https://jitpack.io" )
+
     }
 }
 
