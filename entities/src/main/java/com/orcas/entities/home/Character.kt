@@ -1,5 +1,7 @@
 package com.orcas.entities.home
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
 data class CharacterResponse(
   @SerializedName("info")
@@ -18,7 +20,7 @@ data class Info(
   @SerializedName("prev")
   val prev: Any?
 )
-
+@Parcelize
 data class Character(
   @SerializedName("id")
   val id: Int,
@@ -44,18 +46,20 @@ data class Character(
   val url: String,
   @SerializedName("created")
   val created: String
-)
+) : Parcelable
 
+@Parcelize
 data class Origin(
   @SerializedName("name")
   val name: String,
   @SerializedName("url")
   val url: String
-)
+) : Parcelable
 
+@Parcelize
 data class Location(
   @SerializedName("name")
   val name: String,
   @SerializedName("url")
   val url: String
-)
+) : Parcelable

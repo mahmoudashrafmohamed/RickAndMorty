@@ -14,7 +14,12 @@
         android:id="@+id/homeFragment"
         android:name="com.mahmoudashraf.home.presentation.view.fragment.HomeFragment"
         tools:layout="@layout/fragment_home">
-
+        <action
+            android:id="@+id/action_home_fragment_to_details_nav_graph"
+            app:destination="@id/details_navigation_graph" />
     </fragment>
+
+    <include app:graph="@navigation/details_navigation_graph" />
+
 
 </navigation>

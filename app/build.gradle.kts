@@ -46,6 +46,7 @@ android {
 
 dependencies {
     implementation(project(Modules.splash))
+    implementation(project(Modules.details))
     implementation(project(Modules.home))
     implementation(project(Modules.core)) {
         testImplementation(project(path = Modules.core, configuration = TestConfigurations.testImplementation))

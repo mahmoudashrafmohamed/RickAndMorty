@@ -51,6 +51,7 @@ object Dependencies {
         const val entities = ":entities"
         const val splash = ":features:splash"
         const val home = ":features:home"
+        const val details = ":features:details"
     }
 
     object TestConfigurations {

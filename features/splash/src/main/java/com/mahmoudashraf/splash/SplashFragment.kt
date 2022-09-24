@@ -32,7 +32,7 @@ class SplashFragment : Fragment() {
     viewLifecycleOwner.lifecycleScope.launch {
       repeatOnLifecycle(Lifecycle.State.STARTED) {
         delay(2000)
-        splashActions.navigateToHome("mahmoud.......")
+        splashActions.navigateToHome()
       }
     }
   }

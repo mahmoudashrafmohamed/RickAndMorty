@@ -85,4 +85,16 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     adapter.list = characters
   }
 
+  override fun onPause() {
+    super.onPause()
+    binding.veilRecyclerView.getRecyclerView().layoutManager?.onSaveInstanceState()?.let { viewModel.saveRecyclerViewState(it) }
+  }
+
+  override fun onResume() {
+    super.onResume()
+    if (viewModel.stateInitialized()) {
+      binding.veilRecyclerView.getRecyclerView().layoutManager?.onRestoreInstanceState(viewModel.restoreRecyclerViewState())
+    }
+  }
+
 }

@@ -1,5 +1,6 @@
 package com.mahmoudashraf.home.presentation.viewmodel
 
+import android.os.Parcelable
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mahmoudashraf.home.domain.interactor.CharactersListInterActor
@@ -15,6 +16,7 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(private val interActor: CharactersListInterActor) :
     ViewModel() {
 
+    private lateinit var state: Parcelable
     private val _uiState = MutableStateFlow<HomeScreenState>(HomeScreenState.Initial)
     val uiState: StateFlow<HomeScreenState> = _uiState
 
@@ -35,6 +37,10 @@ class HomeViewModel @Inject constructor(private val interActor: CharactersListIn
                 }
         }
     }
+
+    fun saveRecyclerViewState(parcelable: Parcelable) { state = parcelable }
+    fun restoreRecyclerViewState() : Parcelable = state
+    fun stateInitialized() : Boolean = ::state.isInitialized
 }
 
 sealed class HomeScreenState {

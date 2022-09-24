@@ -5,10 +5,11 @@ import Dependencies.TestConfigurations.androidTestImplementation
 import Dependencies.TestConfigurations.testImplementation
 
 plugins {
-    id("com.android.library")
+    id(Plugins.androidLib)
     id(Plugins.kotlinAndroid)
     id(Plugins.daggerHilt)
     id(Plugins.kotlinKapt)
+    id(Plugins.kotlinParcelize)
 }
 
 android {
@@ -56,4 +57,7 @@ dependencies {
     // Dagger-Hilt
     implementation (DaggerHilt.hiltAndroid)
     kapt(DaggerHilt.hiltKapt)
+
+    implementation ("androidx.recyclerview:recyclerview:1.2.0")
+
 }

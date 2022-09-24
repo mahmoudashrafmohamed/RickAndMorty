@@ -10,7 +10,6 @@ plugins {
     id(Plugins.androidLib)
     id(Plugins.kotlinAndroid)
     id(Plugins.daggerHilt)
-
     id(Plugins.kotlinKapt)
 }
 
