@@ -1,5 +1,6 @@
 package com.mahmoudashraf.home.presentation.viewmodel
 
+import android.graphics.pdf.PdfDocument
 import android.os.Parcelable
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -17,6 +18,7 @@ class HomeViewModel @Inject constructor(private val interActor: CharactersListIn
     ViewModel() {
 
     private lateinit var state: Parcelable
+    private var pageNo = 1
     private val _uiState = MutableStateFlow<HomeScreenState>(HomeScreenState.Initial)
     val uiState: StateFlow<HomeScreenState> = _uiState
 
@@ -27,20 +29,28 @@ class HomeViewModel @Inject constructor(private val interActor: CharactersListIn
     fun getCharacters() {
         _uiState.value = HomeScreenState.Loading
         viewModelScope.launch {
-            interActor.getCharacters(5)
+            interActor.getCharacters(pageNo)
                 .catch { t ->
                     t.printStackTrace()
                     _uiState.value = HomeScreenState.Error(t.message ?: "error!")
                 }
                 .collect {
                     _uiState.value = HomeScreenState.Success(it.data)
+                    updatePageNo(pageNo + 1)
                 }
         }
     }
 
-    fun saveRecyclerViewState(parcelable: Parcelable) { state = parcelable }
-    fun restoreRecyclerViewState() : Parcelable = state
-    fun stateInitialized() : Boolean = ::state.isInitialized
+    private fun updatePageNo(page: Int) {
+        pageNo = page
+    }
+
+    fun saveRecyclerViewState(parcelable: Parcelable) {
+        state = parcelable
+    }
+
+    fun restoreRecyclerViewState(): Parcelable = state
+    fun stateInitialized(): Boolean = ::state.isInitialized
 }
 
 sealed class HomeScreenState {
