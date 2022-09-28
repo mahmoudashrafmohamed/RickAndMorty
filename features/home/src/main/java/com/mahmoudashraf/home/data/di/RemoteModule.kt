@@ -1,5 +1,6 @@
 package com.mahmoudashraf.home.data.di
 
+import android.content.Context
 import com.mahmoudashraf.core.BuildConfig
 import com.mahmoudashraf.core.data.remote.ApiServiceFactory
 import com.mahmoudashraf.home.data.source.remote.CharactersRemoteDataSource
@@ -9,6 +10,7 @@ import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
@@ -17,8 +19,8 @@ import javax.inject.Singleton
 object ApiModule {
   @Provides
   @Singleton
-  fun provideCharactersService(): CharactersService {
-    return ApiServiceFactory.create(BuildConfig.DEBUG, BuildConfig.BASE_URL)
+  fun provideCharactersService(@ApplicationContext context: Context): CharactersService {
+    return ApiServiceFactory.create(BuildConfig.DEBUG,context, BuildConfig.BASE_URL)
   }
 }
 

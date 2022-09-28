@@ -1,5 +1,7 @@
 package com.mahmoudashraf.core.data.remote
 
+import android.content.Context
+import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.ihsanbal.logging.Level
 import com.ihsanbal.logging.LoggingInterceptor
 import okhttp3.Dispatcher
@@ -12,30 +14,46 @@ import java.util.concurrent.TimeUnit
 
 object ApiServiceFactory {
 
-    inline fun <reified T> create(isDebug: Boolean, baseUrl: String): T {
-        val retrofit = createRetrofit(isDebug, baseUrl)
+    inline fun <reified T> create(isDebug: Boolean, context: Context, baseUrl: String): T {
+        val retrofit = createRetrofit(isDebug, context, baseUrl)
         return retrofit.create(T::class.java)
     }
 
-    fun createRetrofit(isDebug: Boolean, baseUrl: String): Retrofit {
+    fun createRetrofit(isDebug: Boolean, context: Context, baseUrl: String): Retrofit {
         return Retrofit.Builder()
             .baseUrl(baseUrl)
-            .client(createOkHttpClient(createLoggingInterceptor(isDebug), createPrettyLoggingInterceptor(isDebug)))
+            .client(
+                createOkHttpClient(
+                    createLoggingInterceptor(isDebug),
+                    createPrettyLoggingInterceptor(isDebug),
+                    createChuckerInterceptor(context)
+                )
+            )
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
 
 
+    private fun createOkHttpClient(
+        httpLoggingInterceptor: HttpLoggingInterceptor,
+        loggingInterceptor: LoggingInterceptor,
+        chuckerInterceptor: ChuckerInterceptor
 
-    private fun createOkHttpClient(httpLoggingInterceptor: HttpLoggingInterceptor, loggingInterceptor: LoggingInterceptor): OkHttpClient {
+    ): OkHttpClient {
         return OkHttpClient.Builder()
             .addInterceptor(httpLoggingInterceptor)
             .addInterceptor(loggingInterceptor)
+            .addInterceptor(chuckerInterceptor)
             .connectTimeout(OK_HTTP_TIMEOUT, TimeUnit.SECONDS)
             .readTimeout(OK_HTTP_TIMEOUT, TimeUnit.SECONDS)
             .dispatcher(Dispatcher().apply { maxRequestsPerHost = 20 })
             .build()
     }
+
+    private fun createChuckerInterceptor(context: Context) =
+        ChuckerInterceptor.Builder(context)
+        .maxContentLength(250_000L)
+        .build()
 
     private fun createLoggingInterceptor(isDebug: Boolean): HttpLoggingInterceptor {
         return HttpLoggingInterceptor().apply {
@@ -49,7 +67,7 @@ object ApiServiceFactory {
 
     private fun createPrettyLoggingInterceptor(isDebug: Boolean): LoggingInterceptor {
         val level = if (isDebug) Level.BODY
-         else Level.NONE
+        else Level.NONE
         return LoggingInterceptor.Builder()
             .setLevel(level)
             .log(Platform.INFO)
