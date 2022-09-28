@@ -1,6 +1,5 @@
 package com.mahmoudashraf.home.presentation.viewmodel
 
-import android.graphics.pdf.PdfDocument
 import android.os.Parcelable
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -18,31 +17,27 @@ class HomeViewModel @Inject constructor(private val interActor: CharactersListIn
     ViewModel() {
 
     private lateinit var state: Parcelable
-    private var pageNo = 1
+    private val cachedCharactersList = mutableListOf<Character>()
     private val _uiState = MutableStateFlow<HomeScreenState>(HomeScreenState.Initial)
     val uiState: StateFlow<HomeScreenState> = _uiState
 
     init {
-        getCharacters()
+        getCharacters(1)
     }
 
-    fun getCharacters() {
+    fun getCharacters(page: Int) {
         _uiState.value = HomeScreenState.Loading
         viewModelScope.launch {
-            interActor.getCharacters(pageNo)
+            interActor.getCharacters(page)
                 .catch { t ->
                     t.printStackTrace()
                     _uiState.value = HomeScreenState.Error(t.message ?: "error!")
                 }
                 .collect {
-                    _uiState.value = HomeScreenState.Success(it.data)
-                    updatePageNo(pageNo + 1)
+                    cachedCharactersList.addAll(it.data)
+                    _uiState.value = HomeScreenState.Success(cachedCharactersList)
                 }
         }
-    }
-
-    private fun updatePageNo(page: Int) {
-        pageNo = page
     }
 
     fun saveRecyclerViewState(parcelable: Parcelable) {

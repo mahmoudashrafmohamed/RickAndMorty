@@ -1,6 +1,7 @@
 package com.mahmoudashraf.home.presentation.view.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -9,6 +10,8 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.mahmoudashraf.core.view.pagination.EndlessRecyclerViewScrollListener
 import com.mahmoudashraf.core.viewbinding.viewBinding
 import com.mahmoudashraf.home.R
 import com.mahmoudashraf.home.databinding.FragmentHomeBinding
@@ -42,6 +45,13 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
       setAdapter(adapter)
       setLayoutManager(GridLayoutManager(context, 2))
       addVeiledItems(15)
+      binding.veilRecyclerView.getRecyclerView().addOnScrollListener(object :
+        EndlessRecyclerViewScrollListener(binding.veilRecyclerView.getRecyclerView().layoutManager as GridLayoutManager) {
+        override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView?) {
+          Log.e("load more", "----------")
+          viewModel.getCharacters(page+1)
+        }
+      })
       observeScreenState()
     }
     adapter.setItemClickListener {
