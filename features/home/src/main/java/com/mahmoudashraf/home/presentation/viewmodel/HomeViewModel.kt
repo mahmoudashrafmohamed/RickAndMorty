@@ -27,7 +27,7 @@ class HomeViewModel @Inject constructor(private val interActor: CharactersListIn
     fun getCharacters() {
         _uiState.value = HomeScreenState.Loading
         viewModelScope.launch {
-            interActor.getCharacters()
+            interActor.getCharacters(5)
                 .catch { t ->
                     t.printStackTrace()
                     _uiState.value = HomeScreenState.Error(t.message ?: "error!")

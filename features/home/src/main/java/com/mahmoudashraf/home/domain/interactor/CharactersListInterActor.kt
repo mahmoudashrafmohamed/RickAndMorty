@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class CharactersListInterActor @Inject constructor(private val charactersRepository: CharactersRepository) {
-  suspend fun getCharacters(): Flow<CharacterResponse> {
-    return charactersRepository.getCharacters()
+  suspend fun getCharacters(page : Int): Flow<CharacterResponse> {
+    return charactersRepository.getCharacters(page)
   }
 }

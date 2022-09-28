@@ -10,9 +10,9 @@ import javax.inject.Inject
 class CharactersRepositoryImpl @Inject constructor(
   private val charactersRemoteDataSource: CharactersRemoteDataSource
 ) : CharactersRepository {
-  override suspend fun getCharacters(): Flow<CharacterResponse> {
+  override suspend fun getCharacters(page : Int): Flow<CharacterResponse> {
     return flow {
-      val response = charactersRemoteDataSource.getCharacters()
+      val response = charactersRemoteDataSource.getCharacters(page)
       emit(response)
     }
   }
