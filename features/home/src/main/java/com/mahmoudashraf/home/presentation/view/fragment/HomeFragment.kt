@@ -19,7 +19,8 @@ import com.mahmoudashraf.home.presentation.view.adapter.CharactersListAdapter
 import com.mahmoudashraf.home.presentation.view.navigation.HomeActions
 import com.mahmoudashraf.home.presentation.viewmodel.HomeScreenState
 import com.mahmoudashraf.home.presentation.viewmodel.HomeViewModel
-import com.orcas.entities.home.Character
+import com.mahmoudashraf.entities.home.Character
+import com.mahmoudashraf.local.entities.CharacterLocalEntity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -55,7 +56,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
       observeScreenState()
     }
     adapter.setItemClickListener {
-      homeActions.navigateToDetails(it)
+     // homeActions.navigateToDetails(it)
     }
   }
 
@@ -90,7 +91,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     binding.veilRecyclerView.unVeil()
   }
 
-  private fun handleSuccessState(characters: List<Character>) {
+  private fun handleSuccessState(characters: List<CharacterLocalEntity>) {
     hideLoading()
     adapter.list = characters
   }

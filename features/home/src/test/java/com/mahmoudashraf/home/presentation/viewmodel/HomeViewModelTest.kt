@@ -1,9 +1,9 @@
 package com.mahmoudashraf.home.presentation.viewmodel
 
 import com.mahmoudashraf.home.domain.interactor.CharactersListInterActor
-import com.orcas.entities.home.Character
-import com.orcas.entities.home.CharacterResponse
-import com.orcas.entities.home.Info
+import com.mahmoudashraf.entities.home.Character
+import com.mahmoudashraf.entities.home.CharacterResponse
+import com.mahmoudashraf.entities.home.Info
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.*

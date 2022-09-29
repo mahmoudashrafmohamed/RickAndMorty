@@ -7,7 +7,7 @@ import com.mahmoudashraf.core.constants.NavigationConstants
 import com.mahmoudashraf.home.presentation.view.navigation.HomeActions
 import com.mahmoudashraf.rickandmorty.R
 import com.mahmoudashraf.splash.SplashActions
-import com.orcas.entities.home.Character
+import com.mahmoudashraf.entities.home.Character
 import dagger.hilt.android.scopes.ActivityScoped
 import javax.inject.Inject
 

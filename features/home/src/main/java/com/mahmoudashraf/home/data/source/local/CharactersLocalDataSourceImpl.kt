@@ -1,7 +1,7 @@
 package com.mahmoudashraf.home.data.source.local
 
-import com.orcas.local.dao.CharactersDao
-import com.orcas.local.entities.CharacterLocalEntity
+import com.mahmoudashraf.local.dao.CharactersDao
+import com.mahmoudashraf.local.entities.CharacterLocalEntity
 import javax.inject.Inject
 
 class CharactersLocalDataSourceImpl @Inject constructor(
@@ -9,5 +9,9 @@ class CharactersLocalDataSourceImpl @Inject constructor(
 ) : CharactersLocalDataSource {
     override suspend fun getCharacters(page: Int): List<CharacterLocalEntity> {
         return charactersDao.getCharacters()
+    }
+
+    override fun addCharacter(characters: List<CharacterLocalEntity>) {
+        return charactersDao.addCharacter(characters)
     }
 }
