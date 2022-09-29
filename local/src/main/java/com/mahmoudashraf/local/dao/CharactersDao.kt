@@ -16,5 +16,5 @@ interface CharactersDao {
     fun deleteCharacters(): Int
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun addCharacter(character: List<CharacterLocalEntity>)
+    fun addCharacters(character: List<CharacterLocalEntity>)
 }

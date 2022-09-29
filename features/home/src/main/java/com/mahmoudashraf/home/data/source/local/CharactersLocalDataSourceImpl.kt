@@ -11,7 +11,11 @@ class CharactersLocalDataSourceImpl @Inject constructor(
         return charactersDao.getCharacters()
     }
 
-    override fun addCharacter(characters: List<CharacterLocalEntity>) {
-        return charactersDao.addCharacter(characters)
+    override fun deleteCharacters(): Int {
+       return charactersDao.deleteCharacters()
+    }
+
+    override fun addCharacters(characters: List<CharacterLocalEntity>) {
+        return charactersDao.addCharacters(characters)
     }
 }
