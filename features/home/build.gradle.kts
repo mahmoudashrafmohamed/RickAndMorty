@@ -45,6 +45,7 @@ android {
 }
 
 dependencies {
+    implementation(project(Modules.local))
     implementation(project(Modules.core)) {
         testImplementation(project(path = Modules.core, configuration = TestConfigurations.testImplementation))
         androidTestImplementation(project(path = Modules.core, configuration = TestConfigurations.androidTestImplementation))
@@ -58,6 +59,6 @@ dependencies {
     implementation (DaggerHilt.hiltAndroid)
     kapt(DaggerHilt.hiltKapt)
 
-    implementation ("androidx.recyclerview:recyclerview:1.2.0")
+    implementation ("androidx.recyclerview:recyclerview:1.2.1")
 
 }
