@@ -30,6 +30,12 @@ object Dependencies {
         const val loggingInterceptor = "com.squareup.okhttp3:logging-interceptor:${Versions.loggingInterceptor}"
     }
 
+    object Room {
+        const val roomRuntime = "androidx.room:room-runtime:${Versions.roomVersion}"
+        const val roomCompilerKapt = "androidx.room:room-compiler:${Versions.roomVersion}"
+        const val roomKtx = "androidx.room:room-ktx:${Versions.roomVersion}"
+    }
+
     object Glide {
         const val glide = "com.github.bumptech.glide:glide:${Versions.glideVersion}"
         const val glideKapt = "com.github.bumptech.glide:compiler:${Versions.glideVersion}"
@@ -48,6 +54,7 @@ object Dependencies {
 
     object Modules {
         const val core = ":core"
+        const val local = ":local"
         const val entities = ":entities"
         const val splash = ":features:splash"
         const val home = ":features:home"

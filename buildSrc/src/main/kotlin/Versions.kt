@@ -14,6 +14,7 @@ object Versions {
     const val retrofit = "2.9.0"
     const val gson = "2.9.0"
     const val loggingInterceptor = "4.9.0"
+    const val roomVersion = "2.2.5"
     const val glideVersion = "4.11.0"
     const val androidVeil = "1.1.3"
     const val espressoCore = "3.4.0"
