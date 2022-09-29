@@ -3,6 +3,7 @@ import org.jetbrains.kotlin.kapt3.base.Kapt.kapt
 plugins {
     id(Plugins.androidLib)
     id(Plugins.kotlinAndroid)
+    id(Plugins.daggerHilt)
     id(Plugins.kotlinKapt)
 }
 
@@ -39,6 +40,9 @@ dependencies {
     api(Dependencies.Room.roomKtx)
     api(Dependencies.Room.roomRuntime)
     kapt(Dependencies.Room.roomCompilerKapt)
+    // Dagger-Hilt
+    implementation (Dependencies.DaggerHilt.hiltAndroid)
+    kapt(Dependencies.DaggerHilt.hiltKapt)
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.3")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
