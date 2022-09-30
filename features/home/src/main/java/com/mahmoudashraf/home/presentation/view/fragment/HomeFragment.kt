@@ -56,7 +56,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
       observeScreenState()
     }
     adapter.setItemClickListener {
-     // homeActions.navigateToDetails(it)
+      homeActions.navigateToDetails(it)
     }
   }
 
@@ -91,7 +91,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     binding.veilRecyclerView.unVeil()
   }
 
-  private fun handleSuccessState(characters: List<CharacterLocalEntity>) {
+  private fun handleSuccessState(characters: List<Character>) {
     hideLoading()
     adapter.list = characters
   }

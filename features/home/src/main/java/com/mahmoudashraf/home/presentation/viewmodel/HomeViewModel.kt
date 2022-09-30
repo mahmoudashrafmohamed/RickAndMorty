@@ -3,9 +3,8 @@ package com.mahmoudashraf.home.presentation.viewmodel
 import android.os.Parcelable
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.mahmoudashraf.home.domain.interactor.CharactersListInterActor
 import com.mahmoudashraf.entities.home.Character
-import com.mahmoudashraf.local.entities.CharacterLocalEntity
+import com.mahmoudashraf.home.domain.interactor.CharactersListInterActor
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -18,7 +17,7 @@ class HomeViewModel @Inject constructor(private val interActor: CharactersListIn
     ViewModel() {
 
     private lateinit var state: Parcelable
-    private val cachedCharactersList = mutableListOf<CharacterLocalEntity>()
+    private val cachedCharactersList = mutableListOf<Character>()
     private val _uiState = MutableStateFlow<HomeScreenState>(HomeScreenState.Initial)
     val uiState: StateFlow<HomeScreenState> = _uiState
 
@@ -52,6 +51,6 @@ class HomeViewModel @Inject constructor(private val interActor: CharactersListIn
 sealed class HomeScreenState {
     object Initial : HomeScreenState()
     object Loading : HomeScreenState()
-    data class Success(val characters: List<CharacterLocalEntity>) : HomeScreenState()
+    data class Success(val characters: List<Character>) : HomeScreenState()
     data class Error(val msg: String) : HomeScreenState()
 }

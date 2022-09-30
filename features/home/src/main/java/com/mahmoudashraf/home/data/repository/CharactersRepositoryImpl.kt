@@ -1,7 +1,7 @@
 package com.mahmoudashraf.home.data.repository
 
-import android.util.Log
 import com.mahmoudashraf.entities.home.Character
+import com.mahmoudashraf.home.data.model.CharacterRemoteEntity
 import com.mahmoudashraf.home.data.source.local.CharactersLocalDataSource
 import com.mahmoudashraf.home.data.source.remote.CharactersRemoteDataSource
 import com.mahmoudashraf.home.domain.repository.CharactersRepository
@@ -19,14 +19,17 @@ class CharactersRepositoryImpl @Inject constructor(
         val localCharacters = charactersLocalDataSource.getCharacters(page)
         if (localCharacters.isEmpty()) {
             val response = charactersRemoteDataSource.getCharacters(page)
-            val mappedToLocal = response.data.map { it.asCharacterLocalEntity() }
-            charactersLocalDataSource.addCharacters(mappedToLocal)
-            emit(mappedToLocal)
+            val mappedToCharacterEntity = response.data.map { it.asCharacterEntity() }
+            val mappedToCharacterLocalEntity = response.data.map { it.asCharacterLocalEntity() }
+            charactersLocalDataSource.addCharacters(mappedToCharacterLocalEntity)
+            emit(mappedToCharacterEntity)
         } else {
-            emit(localCharacters)
+            emit(localCharacters.map { it.asCharacterEntity() })
         }
     }.flowOn(Dispatchers.IO)
 }
 
 
-fun Character.asCharacterLocalEntity() = CharacterLocalEntity(id, image, name)
+fun CharacterRemoteEntity.asCharacterEntity() = Character(id, name,image)
+fun CharacterRemoteEntity.asCharacterLocalEntity() = CharacterLocalEntity(id, image, name)
+fun CharacterLocalEntity.asCharacterEntity() = Character(id, name, image)

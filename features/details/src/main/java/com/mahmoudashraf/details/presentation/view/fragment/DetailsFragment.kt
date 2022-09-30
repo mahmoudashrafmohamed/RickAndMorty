@@ -21,7 +21,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
 
     private fun initView() {
         character?.let {
-            val desc = "${it.name} ${it.location.name}"
+            val desc = it.name
             binding.tvDesc.text = desc
         }
     }
