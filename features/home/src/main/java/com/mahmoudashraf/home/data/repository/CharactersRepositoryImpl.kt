@@ -1,11 +1,10 @@
 package com.mahmoudashraf.home.data.repository
 
-import com.mahmoudashraf.entities.home.Character
-import com.mahmoudashraf.home.data.model.CharacterRemoteEntity
+import com.mahmoudashraf.home.data.mappers.asCharacterEntity
+import com.mahmoudashraf.home.data.mappers.asCharacterLocalEntity
 import com.mahmoudashraf.home.data.source.local.CharactersLocalDataSource
 import com.mahmoudashraf.home.data.source.remote.CharactersRemoteDataSource
 import com.mahmoudashraf.home.domain.repository.CharactersRepository
-import com.mahmoudashraf.local.entities.CharacterLocalEntity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
@@ -27,8 +26,3 @@ class CharactersRepositoryImpl @Inject constructor(
             }
     }.flowOn(Dispatchers.IO)
 }
-
-
-fun CharacterRemoteEntity.asCharacterEntity() = Character(id, name, image)
-fun CharacterRemoteEntity.asCharacterLocalEntity() = CharacterLocalEntity(id, image, name)
-fun CharacterLocalEntity.asCharacterEntity() = Character(id, name, image)
