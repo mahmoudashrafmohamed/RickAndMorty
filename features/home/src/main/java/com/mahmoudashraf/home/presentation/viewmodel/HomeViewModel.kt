@@ -23,16 +23,20 @@ class HomeViewModel @Inject constructor(private val interActor: CharactersListIn
     private val cachedCharactersList = mutableListOf<Character>()
     private val _uiState = MutableStateFlow<HomeScreenState>(HomeScreenState.Initial)
     val uiState: StateFlow<HomeScreenState> = _uiState
+    private var pageNo = 1
+    private var isLoading = false
 
     init {
-        getCharacters(1)
+        getCharacters()
     }
 
-    fun getCharacters(page: Int) {
+    fun getCharacters(page: Int = pageNo) {
+        if (isLoading) return
+        isLoading = true
         if (page == 1)
             _uiState.value = HomeScreenState.Loading
         else {
-           val uiList = cachedCharactersList.asUIModel().toMutableList()
+            val uiList = cachedCharactersList.asUIModel().toMutableList()
             uiList.add(LoadingItemUIModel(-1))
             _uiState.value = HomeScreenState.LoadingNextPage(uiList)
         }
@@ -45,6 +49,8 @@ class HomeViewModel @Inject constructor(private val interActor: CharactersListIn
                 .collect {
                     cachedCharactersList.addAll(it)
                     _uiState.value = HomeScreenState.Success(cachedCharactersList.asUIModel())
+                    pageNo++
+                    isLoading = false
                 }
         }
     }

@@ -10,9 +10,6 @@ abstract class EndlessRecyclerViewScrollListener : RecyclerView.OnScrollListener
     // before loading more.
     private var visibleThreshold = 5
 
-    // The current offset index of data you have loaded
-    private var currentPage = 0
-
     // The total number of items in the dataset after the last load
     private var previousTotalItemCount = 0
 
@@ -29,15 +26,15 @@ abstract class EndlessRecyclerViewScrollListener : RecyclerView.OnScrollListener
 
     constructor(layoutManager: GridLayoutManager) {
         mLayoutManager = layoutManager
-        visibleThreshold = visibleThreshold * layoutManager.getSpanCount()
+        visibleThreshold *= layoutManager.spanCount
     }
 
     constructor(layoutManager: StaggeredGridLayoutManager) {
         mLayoutManager = layoutManager
-        visibleThreshold = visibleThreshold * layoutManager.getSpanCount()
+        visibleThreshold *= layoutManager.spanCount
     }
 
-    fun getLastVisibleItem(lastVisibleItemPositions: IntArray): Int {
+    private fun getLastVisibleItem(lastVisibleItemPositions: IntArray): Int {
         var maxSize = 0
         for (i in lastVisibleItemPositions.indices) {
             if (i == 0) {
@@ -81,19 +78,20 @@ abstract class EndlessRecyclerViewScrollListener : RecyclerView.OnScrollListener
         // If we do need to reload some more data, we execute onLoadMore to fetch the data.
         // threshold should reflect how many total columns there are too
         if (!loading && lastVisibleItemPosition + visibleThreshold > totalItemCount) {
-            currentPage++
-            onLoadMore(currentPage, totalItemCount, view)
+            onLoadMore()
             loading = true
         }
     }
 
-    // Call whenever performing new searches
-    fun resetState() {
-        currentPage = startingPageIndex
-        previousTotalItemCount = 0
-        loading = true
-    }
-
     // Defines the process for actually loading more data based on page
-    abstract fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView?)
+    abstract fun onLoadMore()
+}
+
+fun RecyclerView.setOnLoadMoreListener(onLoadMore: () -> Unit) {
+    addOnScrollListener(object :
+        EndlessRecyclerViewScrollListener(this.layoutManager as GridLayoutManager) {
+        override fun onLoadMore() {
+            onLoadMore()
+        }
+    })
 }

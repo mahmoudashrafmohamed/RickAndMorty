@@ -24,7 +24,6 @@ class CharactersRepositoryImpl @Inject constructor(
                 ?.let { characters ->
                     emit(characters.map { it.asCharacterEntity() }) }
                 ?: run {
-                    kotlinx.coroutines.delay(5000)
                     charactersRemoteDataSource.getCharacters(page).let { response ->
                         charactersLocalDataSource.addCharacters(response.data.map { it.asCharacterLocalEntity() })
                         prefsDataStore.updateLastCallApiTime(System.currentTimeMillis())
