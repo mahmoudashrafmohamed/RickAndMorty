@@ -3,6 +3,8 @@ package com.mahmoudashraf.home.presentation.viewmodel
 import android.os.Parcelable
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.mahmoudashraf.core.data.remote.toRickAndMortyException
+import com.mahmoudashraf.core.exceptions.RickAndMortyException
 import com.mahmoudashraf.entities.home.Character
 import com.mahmoudashraf.home.domain.interactor.CharactersListInterActor
 import com.mahmoudashraf.home.presentation.mapper.asUIModel
@@ -17,8 +19,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(private val interActor: CharactersListInterActor) :
-    ViewModel() {
+class HomeViewModel @Inject constructor(private val interActor: CharactersListInterActor) : ViewModel() {
 
     private lateinit var state: Parcelable
     private val cachedCharactersList = mutableListOf<Character>()
@@ -38,7 +39,7 @@ class HomeViewModel @Inject constructor(private val interActor: CharactersListIn
                     interActor.getCharacters(page)
                         .catch { t ->
                             t.printStackTrace()
-                            _uiState.value = HomeScreenState.Error(t.message ?: "error!")
+                            _uiState.value = HomeScreenState.Error(t.toRickAndMortyException())
                         }
                         .collect {
                             cachedCharactersList.addAll(it)
@@ -76,5 +77,5 @@ sealed class HomeScreenState {
     object Loading : HomeScreenState()
     data class LoadingNextPage(val characters: List<BaseCharacterUIModel>) : HomeScreenState()
     data class Success(val characters: List<BaseCharacterUIModel>) : HomeScreenState()
-    data class Error(val msg: String) : HomeScreenState()
+    data class Error(val exception: RickAndMortyException) : HomeScreenState()
 }

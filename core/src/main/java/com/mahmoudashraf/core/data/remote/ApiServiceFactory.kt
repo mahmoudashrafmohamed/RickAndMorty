@@ -26,7 +26,8 @@ object ApiServiceFactory {
                 createOkHttpClient(
                     createLoggingInterceptor(isDebug),
                     createPrettyLoggingInterceptor(isDebug),
-                    createChuckerInterceptor(context)
+                    createChuckerInterceptor(context),
+                    createNetworkConnectionInterceptor(context)
                 )
             )
             .addConverterFactory(GsonConverterFactory.create())
@@ -37,13 +38,15 @@ object ApiServiceFactory {
     private fun createOkHttpClient(
         httpLoggingInterceptor: HttpLoggingInterceptor,
         loggingInterceptor: LoggingInterceptor,
-        chuckerInterceptor: ChuckerInterceptor
+        chuckerInterceptor: ChuckerInterceptor,
+        networkConnectionInterceptor: NetworkConnectionInterceptor
 
     ): OkHttpClient {
         return OkHttpClient.Builder()
             .addInterceptor(httpLoggingInterceptor)
             .addInterceptor(loggingInterceptor)
             .addInterceptor(chuckerInterceptor)
+            .addInterceptor(networkConnectionInterceptor)
             .connectTimeout(OK_HTTP_TIMEOUT, TimeUnit.SECONDS)
             .readTimeout(OK_HTTP_TIMEOUT, TimeUnit.SECONDS)
             .dispatcher(Dispatcher().apply { maxRequestsPerHost = 20 })
@@ -52,8 +55,11 @@ object ApiServiceFactory {
 
     private fun createChuckerInterceptor(context: Context) =
         ChuckerInterceptor.Builder(context)
-        .maxContentLength(250_000L)
-        .build()
+            .maxContentLength(250_000L)
+            .build()
+
+    private fun createNetworkConnectionInterceptor(context: Context) =
+        NetworkConnectionInterceptor(context)
 
     private fun createLoggingInterceptor(isDebug: Boolean): HttpLoggingInterceptor {
         return HttpLoggingInterceptor().apply {

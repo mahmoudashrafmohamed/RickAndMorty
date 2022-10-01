@@ -2,7 +2,7 @@
  * Organize your config variables here
  */
 object Config {
-    const val minSdkVersion = 21
+    const val minSdkVersion = 23
     const val targetSdkVersion = 32
     const val compileSdkVersion = 32
 

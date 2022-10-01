@@ -10,6 +10,8 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.GridLayoutManager
+import com.mahmoudashraf.core.androidextensions.getMessageShouldDisplay
+import com.mahmoudashraf.core.exceptions.RickAndMortyException
 import com.mahmoudashraf.core.view.pagination.setOnLoadMoreListener
 import com.mahmoudashraf.core.viewbinding.viewBinding
 import com.mahmoudashraf.entities.home.Character
@@ -89,7 +91,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                         is HomeScreenState.Loading -> showLoading()
                         is HomeScreenState.LoadingNextPage -> handleShowFooterProgress(state.characters)
                         is HomeScreenState.Success -> handleSuccessState(state.characters)
-                        is HomeScreenState.Error -> handleErrorState(state)
+                        is HomeScreenState.Error -> handleErrorState(state.exception)
                     }
                 }
             }
@@ -100,13 +102,14 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         adapter.list = characters
     }
 
-    private fun handleErrorState(state: HomeScreenState.Error) {
+    private fun handleErrorState(exception: RickAndMortyException) {
         Toast.makeText(
             context,
-            state.msg,
+            getMessageShouldDisplay(exception),
             Toast.LENGTH_LONG
         ).show()
     }
+
 
     private fun showLoading() {
         binding.veilRecyclerView.veil()
