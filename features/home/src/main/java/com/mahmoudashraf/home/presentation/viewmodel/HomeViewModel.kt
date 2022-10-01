@@ -5,9 +5,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mahmoudashraf.entities.home.Character
 import com.mahmoudashraf.home.domain.interactor.CharactersListInterActor
+import com.mahmoudashraf.home.presentation.mapper.asUIModel
 import com.mahmoudashraf.home.presentation.model.BaseCharacterUIModel
-import com.mahmoudashraf.home.presentation.model.CharacterUIModel
 import com.mahmoudashraf.home.presentation.model.LoadingItemUIModel
+import com.mahmoudashraf.home.presentation.model.PaginationModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -23,35 +24,42 @@ class HomeViewModel @Inject constructor(private val interActor: CharactersListIn
     private val cachedCharactersList = mutableListOf<Character>()
     private val _uiState = MutableStateFlow<HomeScreenState>(HomeScreenState.Initial)
     val uiState: StateFlow<HomeScreenState> = _uiState
-    private var pageNo = 1
-    private var isLoading = false
+    private val paginationModel = PaginationModel(1, false)
 
     init {
         getCharacters()
     }
 
-    fun getCharacters(page: Int = pageNo) {
-        if (isLoading) return
-        isLoading = true
+    fun getCharacters(page: Int = paginationModel.pageNo) {
+        paginationModel.isLoading.takeIf { !it }
+            ?.let {
+                emitLoadingState(page)
+                viewModelScope.launch {
+                    interActor.getCharacters(page)
+                        .catch { t ->
+                            t.printStackTrace()
+                            _uiState.value = HomeScreenState.Error(t.message ?: "error!")
+                        }
+                        .collect {
+                            cachedCharactersList.addAll(it)
+                            _uiState.value = HomeScreenState.Success(cachedCharactersList.asUIModel())
+                            paginationModel.pageNo++
+                            paginationModel.isLoading = false
+                        }
+                }
+            }
+
+
+    }
+
+    private fun emitLoadingState(page: Int) {
+        paginationModel.isLoading = true
         if (page == 1)
             _uiState.value = HomeScreenState.Loading
         else {
             val uiList = cachedCharactersList.asUIModel().toMutableList()
             uiList.add(LoadingItemUIModel(-1))
             _uiState.value = HomeScreenState.LoadingNextPage(uiList)
-        }
-        viewModelScope.launch {
-            interActor.getCharacters(page)
-                .catch { t ->
-                    t.printStackTrace()
-                    _uiState.value = HomeScreenState.Error(t.message ?: "error!")
-                }
-                .collect {
-                    cachedCharactersList.addAll(it)
-                    _uiState.value = HomeScreenState.Success(cachedCharactersList.asUIModel())
-                    pageNo++
-                    isLoading = false
-                }
         }
     }
 
@@ -61,12 +69,6 @@ class HomeViewModel @Inject constructor(private val interActor: CharactersListIn
 
     fun restoreRecyclerViewState(): Parcelable = state
     fun stateInitialized(): Boolean = ::state.isInitialized
-}
-
-private fun List<Character>.asUIModel(): List<BaseCharacterUIModel> {
-    return this.map {
-        CharacterUIModel(it.id, it.name, it.image)
-    }
 }
 
 sealed class HomeScreenState {
