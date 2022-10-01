@@ -3,7 +3,6 @@ package com.mahmoudashraf.home.presentation.view.fragment
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -17,6 +16,7 @@ import com.mahmoudashraf.core.view.pagination.setOnLoadMoreListener
 import com.mahmoudashraf.core.viewbinding.viewBinding
 import com.mahmoudashraf.entities.home.Character
 import com.mahmoudashraf.home.R
+import com.mahmoudashraf.core.R as CoreStrings
 import com.mahmoudashraf.home.databinding.FragmentHomeBinding
 import com.mahmoudashraf.home.presentation.model.BaseCharacterUIModel
 import com.mahmoudashraf.home.presentation.model.CharacterUIModel
@@ -104,7 +104,11 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     }
 
     private fun handleErrorState(exception: RickAndMortyException) {
-        binding.root.showErrorSnackBar(getMessageShouldDisplay(exception))
+        binding.root.showErrorSnackBar(
+            errorMessage = getMessageShouldDisplay(exception),
+            actionName = getString(CoreStrings.string.lbl_retry),
+            actionClickListener = { viewModel.getCharacters() }
+        )
     }
 
 

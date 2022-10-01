@@ -40,6 +40,7 @@ class HomeViewModel @Inject constructor(private val interActor: CharactersListIn
                         .catch { t ->
                             t.printStackTrace()
                             _uiState.value = HomeScreenState.Error(t.toRickAndMortyException())
+                            paginationModel.isLoading = false
                         }
                         .collect {
                             cachedCharactersList.addAll(it)

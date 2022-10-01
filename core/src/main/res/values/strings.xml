@@ -2,4 +2,5 @@
 <resources>
     <string name="lbl_no_connection_error_msg">No Connection Available</string>
     <string name="lbl_general_error_msg">Something wrong happened, try again.</string>
+    <string name="lbl_retry">Retry</string>
 </resources>
