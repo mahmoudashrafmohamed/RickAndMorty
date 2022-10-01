@@ -11,6 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.GridLayoutManager
 import com.mahmoudashraf.core.androidextensions.getMessageShouldDisplay
+import com.mahmoudashraf.core.androidextensions.showErrorSnackBar
 import com.mahmoudashraf.core.exceptions.RickAndMortyException
 import com.mahmoudashraf.core.view.pagination.setOnLoadMoreListener
 import com.mahmoudashraf.core.viewbinding.viewBinding
@@ -103,11 +104,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     }
 
     private fun handleErrorState(exception: RickAndMortyException) {
-        Toast.makeText(
-            context,
-            getMessageShouldDisplay(exception),
-            Toast.LENGTH_LONG
-        ).show()
+        binding.root.showErrorSnackBar(getMessageShouldDisplay(exception))
     }
 
 
