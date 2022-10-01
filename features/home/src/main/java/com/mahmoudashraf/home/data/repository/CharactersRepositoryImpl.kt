@@ -20,12 +20,12 @@ class CharactersRepositoryImpl @Inject constructor(
     override suspend fun getCharacters(page: Int) =
         flow {
             charactersLocalDataSource.getCharacters(page)
-                .takeIf {false}// it.isNotEmpty() && shouldCallApi(lastApiCallMillis = getLastCallApiMillis()).not() }
+                .takeIf {it.isNotEmpty() && shouldCallApi(lastApiCallMillis = getLastCallApiMillis()).not() }
                 ?.let { characters ->
                     emit(characters.map { it.asCharacterEntity() }) }
                 ?: run {
                     charactersRemoteDataSource.getCharacters(page).let { response ->
-                        charactersLocalDataSource.addCharacters(response.data.map { it.asCharacterLocalEntity() })
+                        charactersLocalDataSource.addCharacters(response.data.map { it.asCharacterLocalEntity(page) })
                         prefsDataStore.updateLastCallApiTime(System.currentTimeMillis())
                         emit(response.data.map { it.asCharacterEntity() })
                     }

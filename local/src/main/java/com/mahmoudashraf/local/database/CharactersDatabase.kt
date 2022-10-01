@@ -29,6 +29,8 @@ abstract class CharactersDatabase : RoomDatabase() {
             context.applicationContext,
             CharactersDatabase::class.java,
             Constants.DB_NAME
-        ).build()
+        )
+            .fallbackToDestructiveMigration()
+            .build()
     }
 }
