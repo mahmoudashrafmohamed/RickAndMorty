@@ -2,8 +2,7 @@ package com.mahmoudashraf.home.presentation.viewmodel
 
 import com.mahmoudashraf.home.domain.interactor.CharactersListInterActor
 import com.mahmoudashraf.entities.home.Character
-import com.mahmoudashraf.entities.home.CharacterResponse
-import com.mahmoudashraf.entities.home.Info
+import com.mahmoudashraf.home.presentation.mapper.asUIModel
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.*
@@ -20,15 +19,15 @@ class HomeViewModelTest {
         // arrange
         val testDispatcher = UnconfinedTestDispatcher(testScheduler)
         Dispatchers.setMain(testDispatcher)
-        val data = CharacterResponse(data = listOf<Character>(), info = Info(1, 1, "2", null))
+        val data =  listOf<Character>()
         val charactersListInterActor = Mockito.mock(CharactersListInterActor::class.java)
-        Mockito.`when`(charactersListInterActor.getCharacters()).thenReturn(flow { emit(data) })
+        Mockito.`when`(charactersListInterActor.getCharacters(1)).thenReturn(flow { emit(data) })
         val viewModel = HomeViewModel(charactersListInterActor)
         // act
-        viewModel.getCharacters()
-        val state = viewModel.characters.value
+        viewModel.getCharacters(1)
+        val state = viewModel.uiState.value
         // assert
-        assertEquals(HomeScreenState.Success(data.data), state)
+        assertEquals(HomeScreenState.Success(data.asUIModel()), state)
         Dispatchers.resetMain()
     }
 
@@ -37,14 +36,14 @@ class HomeViewModelTest {
         // arrange
         val testDispatcher = UnconfinedTestDispatcher(testScheduler)
         Dispatchers.setMain(testDispatcher)
-        val data = CharacterResponse(data = listOf<Character>(), info = Info(1, 1, "2", null))
+        val data =  listOf<Character>()
         val charactersListInterActor = Mockito.mock(CharactersListInterActor::class.java)
-        Mockito.`when`(charactersListInterActor.getCharacters())
+        Mockito.`when`(charactersListInterActor.getCharacters(1))
             .thenReturn(flow { throw Throwable("error!") })
         val viewModel = HomeViewModel(charactersListInterActor)
         // act
-        viewModel.getCharacters()
-        val state = viewModel.characters.value
+        viewModel.getCharacters(1)
+        val state = viewModel.uiState.value
         // assert
         assertEquals(HomeScreenState.Error("error!"), state)
         Dispatchers.resetMain()
@@ -55,9 +54,9 @@ class HomeViewModelTest {
         // arrange
         val testDispatcher = UnconfinedTestDispatcher(testScheduler)
         Dispatchers.setMain(testDispatcher)
-        val data = CharacterResponse(data = listOf<Character>(), info = Info(1, 1, "2", null))
+        val data =  listOf<Character>()
         val charactersListInterActor = Mockito.mock(CharactersListInterActor::class.java)
-        Mockito.`when`(charactersListInterActor.getCharacters()).then {
+        Mockito.`when`(charactersListInterActor.getCharacters(1)).then {
             flow {
                 withContext(Dispatchers.Unconfined) {
                     delay(1000)
@@ -66,8 +65,8 @@ class HomeViewModelTest {
                 }
         }
         val viewModel = HomeViewModel(charactersListInterActor)
-        viewModel.getCharacters()
-        val state = viewModel.characters.value
+        viewModel.getCharacters(1)
+        val state = viewModel.uiState.value
         // assert
         assertEquals(HomeScreenState.Loading, state)
         Dispatchers.resetMain()
