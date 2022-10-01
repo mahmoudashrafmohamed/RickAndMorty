@@ -5,6 +5,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mahmoudashraf.entities.home.Character
 import com.mahmoudashraf.home.domain.interactor.CharactersListInterActor
+import com.mahmoudashraf.home.presentation.model.BaseCharacterUIModel
+import com.mahmoudashraf.home.presentation.model.CharacterUIModel
+import com.mahmoudashraf.home.presentation.model.LoadingItemUIModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -26,7 +29,13 @@ class HomeViewModel @Inject constructor(private val interActor: CharactersListIn
     }
 
     fun getCharacters(page: Int) {
-        _uiState.value = HomeScreenState.Loading
+        if (page == 1)
+            _uiState.value = HomeScreenState.Loading
+        else {
+           val uiList = cachedCharactersList.asUIModel().toMutableList()
+            uiList.add(LoadingItemUIModel(-1))
+            _uiState.value = HomeScreenState.LoadingNextPage(uiList)
+        }
         viewModelScope.launch {
             interActor.getCharacters(page)
                 .catch { t ->
@@ -35,7 +44,7 @@ class HomeViewModel @Inject constructor(private val interActor: CharactersListIn
                 }
                 .collect {
                     cachedCharactersList.addAll(it)
-                    _uiState.value = HomeScreenState.Success(cachedCharactersList)
+                    _uiState.value = HomeScreenState.Success(cachedCharactersList.asUIModel())
                 }
         }
     }
@@ -48,9 +57,16 @@ class HomeViewModel @Inject constructor(private val interActor: CharactersListIn
     fun stateInitialized(): Boolean = ::state.isInitialized
 }
 
+private fun List<Character>.asUIModel(): List<BaseCharacterUIModel> {
+    return this.map {
+        CharacterUIModel(it.id, it.name, it.image)
+    }
+}
+
 sealed class HomeScreenState {
     object Initial : HomeScreenState()
     object Loading : HomeScreenState()
-    data class Success(val characters: List<Character>) : HomeScreenState()
+    data class LoadingNextPage(val characters: List<BaseCharacterUIModel>) : HomeScreenState()
+    data class Success(val characters: List<BaseCharacterUIModel>) : HomeScreenState()
     data class Error(val msg: String) : HomeScreenState()
 }

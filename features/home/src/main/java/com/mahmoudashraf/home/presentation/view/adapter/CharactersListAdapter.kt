@@ -8,16 +8,26 @@ import com.bumptech.glide.Glide
 import com.mahmoudashraf.core.base.BaseAdapter
 import com.mahmoudashraf.core.viewbinding.viewBinding
 import com.mahmoudashraf.home.databinding.ItemCharacterBinding
-import com.mahmoudashraf.entities.home.Character
+import com.mahmoudashraf.home.R
+import com.mahmoudashraf.home.databinding.ItemLoadingBinding
+import com.mahmoudashraf.home.presentation.model.BaseCharacterUIModel
+import com.mahmoudashraf.home.presentation.model.CharacterUIModel
+import com.mahmoudashraf.home.presentation.model.LoadingItemUIModel
 
-class CharactersListAdapter : BaseAdapter<Character>() {
+class CharactersListAdapter : BaseAdapter<BaseCharacterUIModel>() {
 
-    private val diffCallback = object : DiffUtil.ItemCallback<Character>() {
-        override fun areItemsTheSame(oldItem: Character, newItem: Character): Boolean {
+    private val diffCallback = object : DiffUtil.ItemCallback<BaseCharacterUIModel>() {
+        override fun areItemsTheSame(
+            oldItem: BaseCharacterUIModel,
+            newItem: BaseCharacterUIModel
+        ): Boolean {
             return oldItem.id == newItem.id
         }
 
-        override fun areContentsTheSame(oldItem: Character, newItem: Character): Boolean {
+        override fun areContentsTheSame(
+            oldItem: BaseCharacterUIModel,
+            newItem: BaseCharacterUIModel
+        ): Boolean {
             return oldItem.hashCode() == newItem.hashCode()
         }
     }
@@ -25,13 +35,19 @@ class CharactersListAdapter : BaseAdapter<Character>() {
     override val differ = AsyncListDiffer(this, diffCallback)
 
     override fun getViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val binding = parent.viewBinding(ItemCharacterBinding::inflate)
-        return CharacterViewHolder(binding)
+        val characterItemBinding = parent.viewBinding(ItemCharacterBinding::inflate)
+        val loadingBinding = parent.viewBinding(ItemLoadingBinding::inflate)
+        return if (viewType==R.layout.item_character)CharacterViewHolder(characterItemBinding)
+        else LoadingViewHolder(loadingBinding)
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return if (list[position] is CharacterUIModel) R.layout.item_character else R.layout.item_loading
     }
 
     inner class CharacterViewHolder(private val binding: ItemCharacterBinding) :
-        RecyclerView.ViewHolder(binding.root), Binder<Character> {
-        override fun bind(item: Character) {
+        RecyclerView.ViewHolder(binding.root), Binder<CharacterUIModel> {
+        override fun bind(item: CharacterUIModel) {
             binding.apply {
                 tvCharacterName.text = item.name
                 Glide.with(imgCharacter).load(item.image).into(imgCharacter)
@@ -42,5 +58,9 @@ class CharactersListAdapter : BaseAdapter<Character>() {
                 }
             }
         }
+    }
+
+    class LoadingViewHolder( binding: ItemLoadingBinding) : RecyclerView.ViewHolder(binding.root),Binder<LoadingItemUIModel> {
+        override fun bind(item: LoadingItemUIModel) = Unit
     }
 }

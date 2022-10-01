@@ -20,6 +20,9 @@ import com.mahmoudashraf.home.presentation.view.navigation.HomeActions
 import com.mahmoudashraf.home.presentation.viewmodel.HomeScreenState
 import com.mahmoudashraf.home.presentation.viewmodel.HomeViewModel
 import com.mahmoudashraf.entities.home.Character
+import com.mahmoudashraf.home.presentation.model.BaseCharacterUIModel
+import com.mahmoudashraf.home.presentation.model.CharacterUIModel
+import com.mahmoudashraf.home.presentation.model.LoadingItemUIModel
 import com.mahmoudashraf.local.entities.CharacterLocalEntity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -56,7 +59,8 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
       observeScreenState()
     }
     adapter.setItemClickListener {
-      homeActions.navigateToDetails(it)
+      val characterUIModel = it as CharacterUIModel
+      homeActions.navigateToDetails(Character(characterUIModel.id, characterUIModel.name,characterUIModel.image))
     }
   }
 
@@ -67,12 +71,17 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
           when (state) {
             is HomeScreenState.Initial -> Unit
             is HomeScreenState.Loading -> showLoading()
+            is HomeScreenState.LoadingNextPage -> handleShowFooterProgress(state.characters)
             is HomeScreenState.Success -> handleSuccessState(state.characters)
             is HomeScreenState.Error -> handleErrorState(state)
           }
         }
       }
     }
+  }
+
+  private fun handleShowFooterProgress(characters: List<BaseCharacterUIModel>) {
+    adapter.list = characters
   }
 
   private fun handleErrorState(state: HomeScreenState.Error) {
@@ -91,7 +100,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     binding.veilRecyclerView.unVeil()
   }
 
-  private fun handleSuccessState(characters: List<Character>) {
+  private fun handleSuccessState(characters: List<BaseCharacterUIModel>) {
     hideLoading()
     adapter.list = characters
   }
