@@ -3,7 +3,7 @@ import Dependencies.TestConfigurations
 import Dependencies.DaggerHilt
 
 plugins {
-    id("com.android.library")
+    id(Plugins.androidLib)
     id(Plugins.kotlinAndroid)
     id(Plugins.daggerHilt)
     id(Plugins.kotlinKapt)
@@ -46,6 +46,4 @@ dependencies {
     // Dagger-Hilt
     implementation (DaggerHilt.hiltAndroid)
     kapt(DaggerHilt.hiltKapt)
-    implementation ("androidx.hilt:hilt-navigation:1.0.0")
-    implementation ("androidx.hilt:hilt-navigation-fragment:1.0.0")
 }

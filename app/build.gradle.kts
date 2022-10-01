@@ -55,6 +55,4 @@ dependencies {
     // Dagger-Hilt
     implementation (Dependencies.DaggerHilt.hiltAndroid)
     kapt(Dependencies.DaggerHilt.hiltKapt)
-    implementation ("androidx.hilt:hilt-navigation:1.0.0")
-    implementation ("androidx.hilt:hilt-navigation-fragment:1.0.0")
 }

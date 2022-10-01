@@ -5,6 +5,9 @@ import Dependencies.TestConfigurations
 import Dependencies.DaggerHilt
 import Dependencies.Retrofit
 import Dependencies.Skeleton
+import Dependencies.DataStore
+import Dependencies.Glide
+import Dependencies.Chucker
 
 plugins {
     id(Plugins.androidLib)
@@ -68,7 +71,7 @@ dependencies {
     api(AndroidX.LifecycleViewModel)
     api(AndroidX.FragmentKtx)
     api(AndroidX.LifecycleKTX)
-
+    api (AndroidX.recyclerView)
 
     // Coroutines
     api(Kotlin.Coroutines)
@@ -79,27 +82,32 @@ dependencies {
     api(Retrofit.gson)
     api(Retrofit.loggingInterceptor)
     // Glide
-    api(Dependencies.Glide.glide)
-    kapt(Dependencies.Glide.glideKapt)
+    api(Glide.glide)
+    kapt(Glide.glideKapt)
+
+    // Dagger-Hilt
+    implementation(DaggerHilt.hiltAndroid)
+    kapt(DaggerHilt.hiltKapt)
+
+    // DataStore
+    api(DataStore.prefDataStore)
+
+    // Debug logging interceptor
+    implementation(Retrofit.debugLoggingInterceptor) {
+        exclude(group = "org.json", module = "json")
+    }
+
+    // chuker
+    debugImplementation(Chucker.chuckerDebug)
+    releaseImplementation(Chucker.chuckerRelease)
 
     // Test Dependencies
     testImplementation(Test.Junit)
     androidTestImplementation(Test.JunitExt)
     androidTestImplementation(Test.EspressoCore)
-
-    // Dagger-Hilt
-    implementation(DaggerHilt.hiltAndroid)
-
-    kapt(DaggerHilt.hiltKapt)
-    implementation("androidx.hilt:hilt-navigation:1.0.0")
-    implementation("androidx.hilt:hilt-navigation-fragment:1.0.0")
-    api("androidx.datastore:datastore-preferences:1.0.0")
-
-
-    implementation("com.github.ihsanbal:LoggingInterceptor:3.1.0") {
-        exclude(group = "org.json", module = "json")
-    }
-
-    debugImplementation("com.github.chuckerteam.chucker:library:3.5.2")
-    releaseImplementation("com.github.chuckerteam.chucker:library-no-op:3.5.2")
+    testImplementation( Test.coroutines)
+    testImplementation( Test.mockito)
+    androidTestImplementation (Test.mockitoAndroid)
+    testImplementation (Test.mockitoInline)
+    testImplementation( Test.mockitoKotlinHelpers)
 }
