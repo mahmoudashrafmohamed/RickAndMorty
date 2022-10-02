@@ -101,6 +101,9 @@ dependencies {
     debugImplementation(Chucker.chuckerDebug)
     releaseImplementation(Chucker.chuckerRelease)
 
+    api(project(Dependencies.Modules.resources))
+
+
     // Test Dependencies
     testImplementation(Test.Junit)
     androidTestImplementation(Test.JunitExt)
