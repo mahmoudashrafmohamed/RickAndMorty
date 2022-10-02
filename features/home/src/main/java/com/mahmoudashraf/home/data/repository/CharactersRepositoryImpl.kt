@@ -33,6 +33,10 @@ class CharactersRepositoryImpl @Inject constructor(
 
         }.flowOn(Dispatchers.IO)
 
+     override fun getUiModeData()  = prefsDataStore.getUiModeData()
+
+    override suspend fun saveUIMode(isNightMode : Boolean) = prefsDataStore.saveUIModeToDataStore(isNightMode)
+
     private fun getLastCallApiMillis(): Long {
         val lastApiCallMillis: Long
         runBlocking {

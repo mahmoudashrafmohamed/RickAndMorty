@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_night_mode"
+        android:checkable="true"
+        android:icon="@drawable/ic_day"
+        android:title="@string/lbl_menu_ui_mode"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/action_about"
+        android:enabled="true"
+        android:title="@string/menu_about"
+        app:showAsAction="never" />
+
+</menu>

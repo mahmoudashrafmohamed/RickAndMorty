@@ -2,7 +2,11 @@ package com.mahmoudashraf.home.presentation.view.fragment
 
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -25,6 +29,8 @@ import com.mahmoudashraf.home.presentation.view.navigation.HomeActions
 import com.mahmoudashraf.home.presentation.viewmodel.HomeScreenState
 import com.mahmoudashraf.home.presentation.viewmodel.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -51,6 +57,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setHasOptionsMenu(true)
         initView()
     }
 
@@ -137,6 +144,41 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             binding.veilRecyclerView.getRecyclerView().layoutManager?.onRestoreInstanceState(
                 viewModel.restoreRecyclerViewState()
             )
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.home_menu, menu)
+        // Set the item state
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.getUIMode.collect {
+                    val item = menu.findItem(R.id.action_night_mode)
+                    if (it) {
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                        item.setIcon(R.drawable.ic_night)
+                    } else {
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                        item.setIcon(R.drawable.ic_day)
+                    }
+                }
+            }
+        }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_night_mode -> {
+                viewLifecycleOwner.lifecycleScope.launch {
+                    val isChecked = viewModel.getUIMode.first()
+                    viewModel.saveToUIMode(isChecked.not())
+                }
+                true
+            }
+            R.id.action_about -> {
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
     }
 

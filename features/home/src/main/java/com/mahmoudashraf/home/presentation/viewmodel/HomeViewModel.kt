@@ -1,6 +1,7 @@
 package com.mahmoudashraf.home.presentation.viewmodel
 
 import android.os.Parcelable
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mahmoudashraf.core.data.remote.toRickAndMortyException
@@ -26,6 +27,9 @@ class HomeViewModel @Inject constructor(private val interActor: CharactersListIn
     private val _uiState = MutableStateFlow<HomeScreenState>(HomeScreenState.Initial)
     val uiState: StateFlow<HomeScreenState> = _uiState
     private val paginationModel = PaginationModel(1, false)
+
+    // get UI mode
+    val getUIMode = interActor.getUiModeData()
 
     init {
         getCharacters()
@@ -65,12 +69,18 @@ class HomeViewModel @Inject constructor(private val interActor: CharactersListIn
         }
     }
 
+
     fun saveRecyclerViewState(parcelable: Parcelable) {
         state = parcelable
     }
 
     fun restoreRecyclerViewState(): Parcelable = state
     fun stateInitialized(): Boolean = ::state.isInitialized
+    fun saveToUIMode(isNightMode: Boolean) {
+        viewModelScope.launch {
+            interActor.saveUIMode(isNightMode)
+        }
+    }
 }
 
 sealed class HomeScreenState {
