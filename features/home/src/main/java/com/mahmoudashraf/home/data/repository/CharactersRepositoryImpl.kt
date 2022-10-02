@@ -8,8 +8,9 @@ import com.mahmoudashraf.home.data.source.local.CharactersLocalDataSource
 import com.mahmoudashraf.home.data.source.remote.CharactersRemoteDataSource
 import com.mahmoudashraf.home.domain.repository.CharactersRepository
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
 class CharactersRepositoryImpl @Inject constructor(
@@ -20,12 +21,22 @@ class CharactersRepositoryImpl @Inject constructor(
     override suspend fun getCharacters(page: Int) =
         flow {
             charactersLocalDataSource.getCharacters(page)
-                .takeIf {it.isNotEmpty() && shouldCallApi(lastApiCallMillis = getLastCallApiMillis()).not() }
+                .takeIf {
+                    it.isNotEmpty() && shouldCallApi(
+                        lastApiCallMillis = prefsDataStore.getLastCallApiTime().first()
+                    ).not()
+                }
                 ?.let { characters ->
-                    emit(characters.map { it.asCharacterEntity() }) }
+                    emit(characters.map { it.asCharacterEntity() })
+                }
                 ?: run {
                     charactersRemoteDataSource.getCharacters(page).let { response ->
-                        charactersLocalDataSource.addCharacters(response.data.map { it.asCharacterLocalEntity(page) })
+                        charactersLocalDataSource.addCharacters(response.data.map {
+                            it.asCharacterLocalEntity(
+                                page
+                            )
+                        })
+                        Log.e("update","db")
                         prefsDataStore.updateLastCallApiTime(System.currentTimeMillis())
                         emit(response.data.map { it.asCharacterEntity() })
                     }
@@ -33,23 +44,16 @@ class CharactersRepositoryImpl @Inject constructor(
 
         }.flowOn(Dispatchers.IO)
 
-     override fun getUiModeData()  = prefsDataStore.getUiModeData()
+    override fun getUiModeData() = prefsDataStore.getUiModeData()
 
-    override suspend fun saveUIMode(isNightMode : Boolean) = prefsDataStore.saveUIModeToDataStore(isNightMode)
-
-    private fun getLastCallApiMillis(): Long {
-        val lastApiCallMillis: Long
-        runBlocking {
-            lastApiCallMillis = prefsDataStore.getLastCallApiTime().first()
-            Log.e("current,---", "" + lastApiCallMillis)
-        }
-        return lastApiCallMillis
-    }
+    override suspend fun saveUIMode(isNightMode: Boolean) =
+        prefsDataStore.saveUIModeToDataStore(isNightMode)
 
     private fun shouldCallApi(
         lastApiCallMillis: Long,
         cacheThresholdInMillis: Long = 300000L //default value is 5 minutes//
     ): Boolean {
+        Log.e("shouldcallApi","called")
         return (System.currentTimeMillis() - lastApiCallMillis) >= cacheThresholdInMillis
     }
 

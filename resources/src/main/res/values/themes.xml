@@ -1,0 +1,14 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <bool name="lightNavEnabled">true</bool>
+    <style name="Theme.RickAndMorty" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowActionBarOverlay">true</item>
+        <item name="android:statusBarColor">?colorSurface</item>
+        <item name="android:windowLightStatusBar">@bool/lightNavEnabled</item>
+        <item name="android:navigationBarColor" tools:targetApi="o">?colorSurface</item>
+        <item name="android:windowLightNavigationBar" tools:ignore="NewApi">@bool/lightNavEnabled</item>
+    </style>
+</resources>
