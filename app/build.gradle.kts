@@ -46,6 +46,7 @@ android {
 
 dependencies {
     implementation(project(Modules.splash))
+    implementation(project(Modules.about))
     implementation(project(Modules.details))
     implementation(project(Modules.home))
     implementation(project(Modules.core)) {

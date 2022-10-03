@@ -37,6 +37,7 @@ android {
     buildTypes {
         debug {
             buildConfigField("String", "BASE_URL", "\"" + LocalProperties.baseUrl + "\"")
+            buildConfigField("String", "VERSION_NAME", "\"" + Config.versionName + "\"")
 
         }
         release {

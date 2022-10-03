@@ -13,16 +13,20 @@ import javax.inject.Inject
 
 @ActivityScoped
 class Navigator @Inject constructor(
-  private val navController: NavController
+    private val navController: NavController
 ) : SplashActions, HomeActions {
-  override fun navigateToHome() {
-    navController.popBackStack()
-    navController.navigate(R.id.homeFragment)
-  }
+    override fun navigateToHome() {
+        navController.popBackStack()
+        navController.navigate(R.id.homeFragment)
+    }
 
-  override fun navigateToDetails(character: Character) {
-    navController.navigate(R.id.action_home_fragment_to_details_nav_graph,Bundle().apply {
-      putParcelable(NavigationConstants.CHARACTER,character)
-    })
-  }
+    override fun navigateToDetails(character: Character) {
+        navController.navigate(R.id.action_home_fragment_to_details_nav_graph, Bundle().apply {
+            putParcelable(NavigationConstants.CHARACTER, character)
+        })
+    }
+
+    override fun navigateToAbout() {
+        navController.navigate(R.id.action_homeFragment_to_aboutFragment)
+    }
 }

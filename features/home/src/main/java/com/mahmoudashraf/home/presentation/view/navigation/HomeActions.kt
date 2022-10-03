@@ -4,4 +4,5 @@ import com.mahmoudashraf.entities.home.Character
 
 interface HomeActions {
     fun navigateToDetails(character: Character)
+    fun navigateToAbout()
 }

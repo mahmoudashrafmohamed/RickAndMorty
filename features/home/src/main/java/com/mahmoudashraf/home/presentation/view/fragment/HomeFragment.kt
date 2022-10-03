@@ -30,7 +30,6 @@ import com.mahmoudashraf.home.presentation.view.navigation.HomeActions
 import com.mahmoudashraf.home.presentation.viewmodel.HomeScreenState
 import com.mahmoudashraf.home.presentation.viewmodel.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -178,6 +177,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 true
             }
             R.id.action_about -> {
+                homeActions.navigateToAbout()
                 true
             }
             else -> super.onOptionsItemSelected(item)
