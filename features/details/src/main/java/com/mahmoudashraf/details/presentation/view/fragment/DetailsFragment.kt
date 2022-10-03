@@ -26,6 +26,8 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
             Glide.with(binding.imgCharacter).load(it.image).into(binding.imgCharacter)
             binding.tvGender.text = it.gender
             binding.tvSpecies.text = it.species
+            binding.tvStatus.text = it.status
+            binding.tvLocation.text = it.locationText
         }
     }
 }

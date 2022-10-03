@@ -19,5 +19,9 @@ data class CharacterLocalEntity(
     @ColumnInfo(name = "gender")
     val gender: String,
     @ColumnInfo(name = "species")
-    val species: String
+    val species: String,
+    @ColumnInfo(name = "status")
+    val status: String,
+    @ColumnInfo(name = "location")
+    val location: String,
 )
