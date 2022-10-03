@@ -10,6 +10,7 @@ import com.mahmoudashraf.entities.home.Character
 import com.mahmoudashraf.home.domain.interactor.CharactersListInterActor
 import com.mahmoudashraf.home.presentation.mapper.asUIModel
 import com.mahmoudashraf.home.presentation.model.BaseCharacterUIModel
+import com.mahmoudashraf.home.presentation.model.CharacterUIModel
 import com.mahmoudashraf.home.presentation.model.LoadingItemUIModel
 import com.mahmoudashraf.home.presentation.model.PaginationModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -84,6 +85,11 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             uiModeInterActor.saveUIMode(isNightMode)
         }
+    }
+
+
+    fun mapToCharacterEntity(characterUIModel: CharacterUIModel): Character {
+        return cachedCharactersList.first { it.id == characterUIModel.id }
     }
 }
 

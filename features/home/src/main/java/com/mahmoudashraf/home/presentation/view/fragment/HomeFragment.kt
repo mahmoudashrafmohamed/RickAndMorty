@@ -81,13 +81,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         }
         adapter.setItemClickListener {
             val characterUIModel = it as CharacterUIModel
-            homeActions.navigateToDetails(
-                Character(
-                    characterUIModel.id,
-                    characterUIModel.name,
-                    characterUIModel.image
-                )
-            )
+            homeActions.navigateToDetails(viewModel.mapToCharacterEntity(characterUIModel))
         }
     }
 
