@@ -15,6 +15,7 @@ fun View.showErrorSnackBar(
     val snackBar = Snackbar.make(this, errorMessage, length)
     snackBar
         .setBackgroundTint(color)
+        .setTextColor(Color.WHITE)
         .setActionTextColor(Color.WHITE)
         .setAction(actionName) {
             snackBar.dismiss()
