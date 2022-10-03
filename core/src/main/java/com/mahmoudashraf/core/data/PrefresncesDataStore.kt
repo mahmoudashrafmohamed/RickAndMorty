@@ -1,12 +1,12 @@
 package com.mahmoudashraf.core.data
 
 import android.content.Context
-import android.content.res.Configuration
 import android.util.Log
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
+import com.mahmoudashraf.core.androidextensions.isDarkMode
 import com.mahmoudashraf.core.constants.CoreConstants
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -15,9 +15,9 @@ import javax.inject.Inject
 
 interface PrefsDataStore {
     suspend fun updateLastCallApiTime(lastCallApiTime: Long)
-    fun getLastCallApiTime(): Flow<Long>
-    fun getUiModeData(): Flow<Boolean>
+    val lastCallApiTime: Flow<Long>
     suspend fun saveUIModeToDataStore(isNightMode: Boolean)
+    val uiMode: Flow<Boolean>
 }
 
 class PrefsDataStoreImpl @Inject constructor(private val context: Context) : PrefsDataStore {
@@ -30,31 +30,19 @@ class PrefsDataStoreImpl @Inject constructor(private val context: Context) : Pre
         context.prefDataStore.edit { it[Keys.LAST_API_CALL_TIME] = lastCallApiTime }
     }
 
-    override fun getLastCallApiTime() = context.prefDataStore.data.map {
-        it[Keys.LAST_API_CALL_TIME] ?: 0L
-    }
-
-    override fun getUiModeData(): Flow<Boolean> {
-        return context.prefDataStore.data.map { preferences ->
-            val uiMode = preferences[Keys.UI_MODE_KEY] ?: isDarkMode()
-            uiMode
+    override val lastCallApiTime
+        get() = context.prefDataStore.data.map { preferences ->
+            preferences[Keys.LAST_API_CALL_TIME] ?: 0L
         }
-    }
+
+    override val uiMode: Flow<Boolean>
+        get() = context.prefDataStore.data.map { preferences ->
+            preferences[Keys.UI_MODE_KEY] ?: context.isDarkMode()
+        }
 
     override suspend fun saveUIModeToDataStore(isNightMode: Boolean) {
         context.prefDataStore.edit { preferences ->
             preferences[Keys.UI_MODE_KEY] = isNightMode
-        }
-    }
-
-    //check dark mode or not
-    fun isDarkMode(): Boolean {
-        return when (context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
-            Configuration.UI_MODE_NIGHT_NO ->
-                false
-            Configuration.UI_MODE_NIGHT_YES ->
-                true
-            else -> false
         }
     }
 }

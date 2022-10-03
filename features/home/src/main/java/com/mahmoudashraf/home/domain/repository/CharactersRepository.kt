@@ -5,6 +5,4 @@ import kotlinx.coroutines.flow.Flow
 
 interface CharactersRepository {
   suspend fun getCharacters(page : Int): Flow<List<Character>>
-  fun getUiModeData() : Flow<Boolean>
-  suspend fun saveUIMode(isNightMode : Boolean)
 }

@@ -23,7 +23,7 @@ class CharactersRepositoryImpl @Inject constructor(
             charactersLocalDataSource.getCharacters(page)
                 .takeIf {
                     it.isNotEmpty() && shouldCallApi(
-                        lastApiCallMillis = prefsDataStore.getLastCallApiTime().first()
+                        lastApiCallMillis = prefsDataStore.lastCallApiTime.first()
                     ).not()
                 }
                 ?.let { characters ->
@@ -43,11 +43,6 @@ class CharactersRepositoryImpl @Inject constructor(
                 }
 
         }.flowOn(Dispatchers.IO)
-
-    override fun getUiModeData() = prefsDataStore.getUiModeData()
-
-    override suspend fun saveUIMode(isNightMode: Boolean) =
-        prefsDataStore.saveUIModeToDataStore(isNightMode)
 
     private fun shouldCallApi(
         lastApiCallMillis: Long,

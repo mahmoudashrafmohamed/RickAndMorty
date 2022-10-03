@@ -1,10 +1,10 @@
 package com.mahmoudashraf.home.presentation.viewmodel
 
 import android.os.Parcelable
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mahmoudashraf.core.data.remote.toRickAndMortyException
+import com.mahmoudashraf.core.domain.interactor.UIModeInterActor
 import com.mahmoudashraf.core.exceptions.RickAndMortyException
 import com.mahmoudashraf.entities.home.Character
 import com.mahmoudashraf.home.domain.interactor.CharactersListInterActor
@@ -20,7 +20,10 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(private val interActor: CharactersListInterActor) : ViewModel() {
+class HomeViewModel @Inject constructor(
+    private val interActor: CharactersListInterActor,
+    private val uiModeInterActor: UIModeInterActor
+) : ViewModel() {
 
     private lateinit var state: Parcelable
     private val cachedCharactersList = mutableListOf<Character>()
@@ -29,7 +32,7 @@ class HomeViewModel @Inject constructor(private val interActor: CharactersListIn
     private val paginationModel = PaginationModel(1, false)
 
     // get UI mode
-    val getUIMode = interActor.getUiModeData()
+    val getUIMode = uiModeInterActor.getUiModeData()
 
     init {
         getCharacters()
@@ -48,7 +51,8 @@ class HomeViewModel @Inject constructor(private val interActor: CharactersListIn
                         }
                         .collect {
                             cachedCharactersList.addAll(it)
-                            _uiState.value = HomeScreenState.Success(cachedCharactersList.asUIModel())
+                            _uiState.value =
+                                HomeScreenState.Success(cachedCharactersList.asUIModel())
                             paginationModel.pageNo++
                             paginationModel.isLoading = false
                         }
@@ -78,7 +82,7 @@ class HomeViewModel @Inject constructor(private val interActor: CharactersListIn
     fun stateInitialized(): Boolean = ::state.isInitialized
     fun saveToUIMode(isNightMode: Boolean) {
         viewModelScope.launch {
-            interActor.saveUIMode(isNightMode)
+            uiModeInterActor.saveUIMode(isNightMode)
         }
     }
 }

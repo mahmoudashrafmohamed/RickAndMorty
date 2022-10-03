@@ -9,6 +9,4 @@ class CharactersListInterActor @Inject constructor(private val charactersReposit
   suspend fun getCharacters(page : Int): Flow<List<Character>> {
     return charactersRepository.getCharacters(page)
   }
-  fun getUiModeData() = charactersRepository.getUiModeData()
-  suspend fun saveUIMode(isNightMode : Boolean) = charactersRepository.saveUIMode(isNightMode)
 }
