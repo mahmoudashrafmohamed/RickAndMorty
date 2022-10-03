@@ -4,6 +4,8 @@ import android.content.Context
 import android.content.res.Configuration
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
+import androidx.appcompat.app.AppCompatDelegate
+
 
 fun Context.isInternetAvailable(): Boolean {
     val connectivityManager =
@@ -20,11 +22,17 @@ fun Context.isInternetAvailable(): Boolean {
 
 //check dark mode or not
 fun Context.isDarkMode(): Boolean {
-    return when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
-        Configuration.UI_MODE_NIGHT_NO ->
-            false
-        Configuration.UI_MODE_NIGHT_YES ->
-            true
-        else -> false
+    val defaultNightMode = AppCompatDelegate.getDefaultNightMode()
+    if (defaultNightMode == AppCompatDelegate.MODE_NIGHT_YES) {
+        return true
     }
+    if (defaultNightMode == AppCompatDelegate.MODE_NIGHT_NO) {
+        return false
+    }
+    when ((resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK)) {
+        Configuration.UI_MODE_NIGHT_NO -> return false
+        Configuration.UI_MODE_NIGHT_YES -> return true
+        Configuration.UI_MODE_NIGHT_UNDEFINED -> return false
+    }
+    return false
 }

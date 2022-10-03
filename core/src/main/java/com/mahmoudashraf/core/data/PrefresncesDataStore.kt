@@ -1,7 +1,6 @@
 package com.mahmoudashraf.core.data
 
 import android.content.Context
-import android.util.Log
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.longPreferencesKey
@@ -26,7 +25,6 @@ class PrefsDataStoreImpl @Inject constructor(private val context: Context) : Pre
 
 
     override suspend fun updateLastCallApiTime(lastCallApiTime: Long) {
-        Log.e("updated", "" + lastCallApiTime)
         context.prefDataStore.edit { it[Keys.LAST_API_CALL_TIME] = lastCallApiTime }
     }
 
@@ -37,7 +35,10 @@ class PrefsDataStoreImpl @Inject constructor(private val context: Context) : Pre
 
     override val uiMode: Flow<Boolean>
         get() = context.prefDataStore.data.map { preferences ->
-            preferences[Keys.UI_MODE_KEY] ?: context.isDarkMode()
+            preferences[Keys.UI_MODE_KEY] ?: run {
+                val isDark = context.isDarkMode()
+                isDark
+            }
         }
 
     override suspend fun saveUIModeToDataStore(isNightMode: Boolean) {
