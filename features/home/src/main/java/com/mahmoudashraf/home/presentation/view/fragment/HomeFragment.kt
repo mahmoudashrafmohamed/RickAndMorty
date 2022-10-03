@@ -19,9 +19,7 @@ import com.mahmoudashraf.core.androidextensions.showErrorSnackBar
 import com.mahmoudashraf.core.exceptions.RickAndMortyException
 import com.mahmoudashraf.core.view.pagination.setOnLoadMoreListener
 import com.mahmoudashraf.core.viewbinding.viewBinding
-import com.mahmoudashraf.entities.home.Character
 import com.mahmoudashraf.home.R
-import com.mahmoudashraf.core.R as CoreStrings
 import com.mahmoudashraf.home.databinding.FragmentHomeBinding
 import com.mahmoudashraf.home.presentation.model.BaseCharacterUIModel
 import com.mahmoudashraf.home.presentation.model.CharacterUIModel
@@ -33,6 +31,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import com.mahmoudashraf.core.R as CoreStrings
 
 @AndroidEntryPoint
 class HomeFragment : Fragment(R.layout.fragment_home) {
