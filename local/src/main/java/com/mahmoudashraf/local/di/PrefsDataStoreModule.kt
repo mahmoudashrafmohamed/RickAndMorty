@@ -1,8 +1,8 @@
-package com.mahmoudashraf.core.di
+package com.mahmoudashraf.local.di
 
 import android.content.Context
-import com.mahmoudashraf.core.data.PrefsDataStore
-import com.mahmoudashraf.core.data.PrefsDataStoreImpl
+import com.mahmoudashraf.local.datastore.PrefsDataStore
+import com.mahmoudashraf.local.datastore.PrefsDataStoreImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

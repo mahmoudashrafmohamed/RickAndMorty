@@ -1,7 +1,7 @@
 package com.mahmoudashraf.splash
 
 import androidx.lifecycle.ViewModel
-import com.mahmoudashraf.core.domain.interactor.UIModeInterActor
+import com.mahmoudashraf.local.common.UIModeInterActor
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

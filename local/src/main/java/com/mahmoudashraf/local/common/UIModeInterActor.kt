@@ -1,6 +1,6 @@
-package com.mahmoudashraf.core.domain.interactor
+package com.mahmoudashraf.local.common
 
-import com.mahmoudashraf.core.data.PrefsDataStore
+import com.mahmoudashraf.local.datastore.PrefsDataStore
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 

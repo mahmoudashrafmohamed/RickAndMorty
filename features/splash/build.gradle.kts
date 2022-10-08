@@ -43,6 +43,8 @@ dependencies {
         testImplementation(project(path = Modules.core, configuration = TestConfigurations.testImplementation))
         androidTestImplementation(project(path = Modules.core, configuration = TestConfigurations.androidTestImplementation))
     }
+    implementation(project(Modules.local))
+
     // Dagger-Hilt
     implementation (DaggerHilt.hiltAndroid)
     kapt(DaggerHilt.hiltKapt)

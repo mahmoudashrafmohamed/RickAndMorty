@@ -1,12 +1,12 @@
 package com.mahmoudashraf.home.data.repository
 
 import android.util.Log
-import com.mahmoudashraf.core.data.PrefsDataStore
 import com.mahmoudashraf.home.data.mappers.asCharacterEntity
 import com.mahmoudashraf.home.data.mappers.asCharacterLocalEntity
 import com.mahmoudashraf.home.data.source.local.CharactersLocalDataSource
 import com.mahmoudashraf.home.data.source.remote.CharactersRemoteDataSource
 import com.mahmoudashraf.home.domain.repository.CharactersRepository
+import com.mahmoudashraf.local.datastore.PrefsDataStore
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow

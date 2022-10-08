@@ -87,9 +87,6 @@ dependencies {
     implementation(DaggerHilt.hiltAndroid)
     kapt(DaggerHilt.hiltKapt)
 
-    // DataStore
-    api(DataStore.prefDataStore)
-
     // Debug logging interceptor
     implementation(Retrofit.debugLoggingInterceptor) {
         exclude(group = "org.json", module = "json")

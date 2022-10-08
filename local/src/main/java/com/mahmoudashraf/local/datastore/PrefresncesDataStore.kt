@@ -1,4 +1,4 @@
-package com.mahmoudashraf.core.data
+package com.mahmoudashraf.local.datastore
 
 import android.content.Context
 import androidx.datastore.preferences.core.booleanPreferencesKey
@@ -6,7 +6,7 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.mahmoudashraf.core.androidextensions.isDarkMode
-import com.mahmoudashraf.core.constants.CoreConstants
+import com.mahmoudashraf.local.datastore.Keys.DATA_STORE_NAME
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
@@ -21,7 +21,7 @@ interface PrefsDataStore {
 
 class PrefsDataStoreImpl @Inject constructor(private val context: Context) : PrefsDataStore {
 
-    private val Context.prefDataStore by preferencesDataStore(CoreConstants.DATA_STORE_NAME)
+    private val Context.prefDataStore by preferencesDataStore(DATA_STORE_NAME)
 
 
     override suspend fun updateLastCallApiTime(lastCallApiTime: Long) {
@@ -47,10 +47,8 @@ class PrefsDataStoreImpl @Inject constructor(private val context: Context) : Pre
         }
     }
 }
-
 private object Keys {
+    const val DATA_STORE_NAME = "rick_morty_data_store"
     val LAST_API_CALL_TIME = longPreferencesKey("show_completed")
     val UI_MODE_KEY = booleanPreferencesKey("ui_mode_key")
 }
-
-

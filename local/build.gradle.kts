@@ -36,9 +36,13 @@ android {
 }
 
 dependencies {
+    implementation(project(Dependencies.Modules.core))
     api(Dependencies.Room.roomKtx)
     api(Dependencies.Room.roomRuntime)
+    implementation("androidx.test.ext:junit-ktx:1.1.3")
     kapt(Dependencies.Room.roomCompilerKapt)
+    // DataStore
+    api(Dependencies.DataStore.prefDataStore)
     // Dagger-Hilt
     implementation (Dependencies.DaggerHilt.hiltAndroid)
     kapt(Dependencies.DaggerHilt.hiltKapt)

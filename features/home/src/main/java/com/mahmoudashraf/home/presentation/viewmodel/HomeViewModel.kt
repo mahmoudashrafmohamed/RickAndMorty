@@ -4,7 +4,6 @@ import android.os.Parcelable
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mahmoudashraf.core.data.remote.toRickAndMortyException
-import com.mahmoudashraf.core.domain.interactor.UIModeInterActor
 import com.mahmoudashraf.core.exceptions.RickAndMortyException
 import com.mahmoudashraf.entities.home.Character
 import com.mahmoudashraf.home.domain.interactor.CharactersListInterActor
@@ -13,6 +12,7 @@ import com.mahmoudashraf.home.presentation.model.BaseCharacterUIModel
 import com.mahmoudashraf.home.presentation.model.CharacterUIModel
 import com.mahmoudashraf.home.presentation.model.LoadingItemUIModel
 import com.mahmoudashraf.home.presentation.model.PaginationModel
+import com.mahmoudashraf.local.common.UIModeInterActor
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
