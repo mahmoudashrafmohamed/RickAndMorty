@@ -1,6 +1,6 @@
-package com.mahmoudashraf.home.data.source.remote
+package com.mahmoudashraf.remote.services
 
-import com.mahmoudashraf.home.data.model.CharacterRemoteModel
+import com.mahmoudashraf.remote.model.CharacterRemoteModel
 import retrofit2.http.GET
 import retrofit2.http.Query
 

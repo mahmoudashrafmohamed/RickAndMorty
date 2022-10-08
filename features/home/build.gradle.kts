@@ -45,6 +45,7 @@ android {
 
 dependencies {
     implementation(project(Modules.local))
+    implementation(project(Modules.remote))
     implementation(project(Modules.core)) {
         testImplementation(project(path = Modules.core, configuration = testImplementation))
         androidTestImplementation(project(path = Modules.core, configuration = androidTestImplementation))

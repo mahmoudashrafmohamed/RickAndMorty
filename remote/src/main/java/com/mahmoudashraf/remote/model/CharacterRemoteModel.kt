@@ -1,7 +1,5 @@
-package com.mahmoudashraf.home.data.model
-import android.os.Parcelable
+package com.mahmoudashraf.remote.model
 import com.google.gson.annotations.SerializedName
-import kotlinx.parcelize.Parcelize
 
 data class CharacterRemoteModel(
   @SerializedName("info")
@@ -20,7 +18,6 @@ data class Info(
   @SerializedName("prev")
   val prev: Any?
 )
-@Parcelize
 data class CharacterRemoteEntity(
   @SerializedName("id")
   val id: Int,
@@ -46,20 +43,18 @@ data class CharacterRemoteEntity(
   val url: String,
   @SerializedName("created")
   val created: String
-) : Parcelable
+)
 
-@Parcelize
 data class Origin(
   @SerializedName("name")
   val name: String,
   @SerializedName("url")
   val url: String
-) : Parcelable
+)
 
-@Parcelize
 data class Location(
   @SerializedName("name")
   val name: String,
   @SerializedName("url")
   val url: String
-) : Parcelable
+)

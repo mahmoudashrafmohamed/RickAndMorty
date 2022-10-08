@@ -78,10 +78,7 @@ dependencies {
     api(Kotlin.Coroutines)
     // skeleton
     api(Skeleton.Androidveil)
-    // Retrofit
-    api(Retrofit.retrofit)
-    api(Retrofit.gson)
-    api(Retrofit.loggingInterceptor)
+
     // Glide
     api(Glide.glide)
     kapt(Glide.glideKapt)
@@ -103,6 +100,11 @@ dependencies {
     releaseImplementation(Chucker.chuckerRelease)
 
     api(project(Dependencies.Modules.resources))
+
+    // Retrofit
+    api(Dependencies.Retrofit.retrofit)
+    api(Dependencies.Retrofit.gson)
+    api(Dependencies.Retrofit.loggingInterceptor)
 
 
     // Test Dependencies

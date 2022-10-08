@@ -1,6 +1,6 @@
 package com.mahmoudashraf.home.data.source.remote
 
-import com.mahmoudashraf.home.data.model.CharacterRemoteModel
+import com.mahmoudashraf.remote.model.CharacterRemoteModel
 
 
 interface CharactersRemoteDataSource {

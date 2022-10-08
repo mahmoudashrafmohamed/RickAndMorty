@@ -5,7 +5,6 @@ import com.mahmoudashraf.core.BuildConfig
 import com.mahmoudashraf.core.data.remote.ApiServiceFactory
 import com.mahmoudashraf.home.data.source.remote.CharactersRemoteDataSource
 import com.mahmoudashraf.home.data.source.remote.CharactersRemoteDataSourceImpl
-import com.mahmoudashraf.home.data.source.remote.CharactersService
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -19,7 +18,7 @@ import javax.inject.Singleton
 object ApiModule {
   @Provides
   @Singleton
-  fun provideCharactersService(@ApplicationContext context: Context): CharactersService {
+  fun provideCharactersService(@ApplicationContext context: Context): com.mahmoudashraf.remote.services.CharactersService {
     return ApiServiceFactory.create(BuildConfig.DEBUG,context, BuildConfig.BASE_URL)
   }
 }

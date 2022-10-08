@@ -78,6 +78,7 @@ object Dependencies {
     object Modules {
         const val core = ":core"
         const val local = ":local"
+        const val remote = ":remote"
         const val entities = ":entities"
         const val splash = ":features:splash"
         const val home = ":features:home"
