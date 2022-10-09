@@ -9,13 +9,12 @@
     <application
         android:name="com.mahmoudashraf.rickandmorty.app.RichAndMortyApp"
         android:allowBackup="false"
-        android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:icon="${appIcon}"
+        android:label="${appName}"
+        android:roundIcon="${appIconRounded}"
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
         android:theme="@style/Theme.RickAndMorty"
-        tools:targetApi="m"
         tools:ignore="DataExtractionRules">
         <activity
             android:name="com.mahmoudashraf.rickandmorty.MainActivity"

@@ -24,10 +24,19 @@ android {
     }
 
     buildTypes {
-        getByName("release") {
-            isMinifyEnabled = true
+        debug {
+            applicationIdSuffix = ".debug"
+            manifestPlaceholders["appName"] = "@string/app_name_debug"
+            manifestPlaceholders["appIcon"] = "@mipmap/ic_launcher_debug"
+            manifestPlaceholders["appIconRounded"] = "@mipmap/ic_launcher_debug_round"
+        }
+        release {
+            manifestPlaceholders["appName"] = "@string/app_name"
+            manifestPlaceholders["appIcon"] = "@mipmap/ic_launcher"
+            manifestPlaceholders["appIconRounded"] = "@mipmap/ic_launcher_round"
+            isMinifyEnabled = false
             proguardFiles(
-                getDefaultProguardFile("proguard-android.txt"),
+                getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
         }
@@ -50,10 +59,20 @@ dependencies {
     implementation(project(Modules.details))
     implementation(project(Modules.home))
     implementation(project(Modules.core)) {
-        testImplementation(project(path = Modules.core, configuration = TestConfigurations.testImplementation))
-        androidTestImplementation(project(path = Modules.core, configuration = TestConfigurations.androidTestImplementation))
+        testImplementation(
+            project(
+                path = Modules.core,
+                configuration = TestConfigurations.testImplementation
+            )
+        )
+        androidTestImplementation(
+            project(
+                path = Modules.core,
+                configuration = TestConfigurations.androidTestImplementation
+            )
+        )
     }
     // Dagger-Hilt
-    implementation (Dependencies.DaggerHilt.hiltAndroid)
+    implementation(Dependencies.DaggerHilt.hiltAndroid)
     kapt(Dependencies.DaggerHilt.hiltKapt)
 }
