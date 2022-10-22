@@ -15,6 +15,11 @@ android {
     }
 
     buildTypes {
+        debug{
+            isMinifyEnabled = false
+            consumerProguardFiles( "proguard-rules.pro")
+        }
+
         release {
             isMinifyEnabled = false
             proguardFiles(

@@ -10,7 +10,6 @@ buildscript {
         classpath(GradleConfig.Kotlin)
         classpath(GradleConfig.hilt)
         classpath(GradleConfig.spotlessGradlePlugin)
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.21")
     }
 
 }

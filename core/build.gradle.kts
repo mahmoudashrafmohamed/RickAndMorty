@@ -38,14 +38,14 @@ android {
         debug {
             buildConfigField("String", "BASE_URL", "\"" + LocalProperties.baseUrl + "\"")
             buildConfigField("String", "VERSION_NAME", "\"" + Config.versionName + "\"")
-
+            isMinifyEnabled = false
+            consumerProguardFiles( "proguard-rules.pro")
         }
         release {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
+            buildConfigField("String", "BASE_URL", "\"" + LocalProperties.baseUrl + "\"")
+            buildConfigField("String", "VERSION_NAME", "\"" + Config.versionName + "\"")
+            isMinifyEnabled = true
+            consumerProguardFiles( "proguard-rules.pro")
         }
     }
     compileOptions {

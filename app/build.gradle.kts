@@ -23,22 +23,37 @@ android {
         testInstrumentationRunner = Config.testInstrumentationRunner
     }
 
+    signingConfigs {
+        create("release") {
+            keyAlias = "rick"
+            keyPassword = "123456"
+            storeFile = file("C:/Users/mahmoud_ashraf/rick_and_morty.jks")
+            storePassword = "123456"
+        }
+    }
     buildTypes {
         debug {
             applicationIdSuffix = ".debug"
             manifestPlaceholders["appName"] = "@string/app_name_debug"
             manifestPlaceholders["appIcon"] = "@mipmap/ic_launcher_debug"
             manifestPlaceholders["appIconRounded"] = "@mipmap/ic_launcher_debug_round"
-        }
-        release {
-            manifestPlaceholders["appName"] = "@string/app_name"
-            manifestPlaceholders["appIcon"] = "@mipmap/ic_launcher"
-            manifestPlaceholders["appIconRounded"] = "@mipmap/ic_launcher_round"
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+        }
+        release {
+            manifestPlaceholders["appName"] = "@string/app_name"
+            manifestPlaceholders["appIcon"] = "@mipmap/ic_launcher"
+            manifestPlaceholders["appIconRounded"] = "@mipmap/ic_launcher_round"
+            isMinifyEnabled = true
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+            signingConfig = signingConfigs.getByName("release")
+            isDebuggable = false
         }
     }
     compileOptions {
