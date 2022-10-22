@@ -39,6 +39,10 @@ object Dependencies {
             "com.github.ihsanbal:LoggingInterceptor:${Versions.debugLoggingInterceptor}"
     }
 
+    object Logging {
+        const val timber = "com.jakewharton.timber:timber:5.0.1"
+    }
+
     object Room {
         const val roomRuntime = "androidx.room:room-runtime:${Versions.roomVersion}"
         const val roomCompilerKapt = "androidx.room:room-compiler:${Versions.roomVersion}"

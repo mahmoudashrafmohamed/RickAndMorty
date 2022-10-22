@@ -5,9 +5,9 @@ import Dependencies.TestConfigurations
 import Dependencies.DaggerHilt
 import Dependencies.Retrofit
 import Dependencies.Skeleton
-import Dependencies.DataStore
 import Dependencies.Glide
 import Dependencies.Chucker
+import Dependencies.Logging
 
 plugins {
     id(Plugins.androidLib)
@@ -99,9 +99,12 @@ dependencies {
     api(project(Dependencies.Modules.resources))
 
     // Retrofit
-    api(Dependencies.Retrofit.retrofit)
-    api(Dependencies.Retrofit.gson)
-    api(Dependencies.Retrofit.loggingInterceptor)
+    api(Retrofit.retrofit)
+    api(Retrofit.gson)
+    api(Retrofit.loggingInterceptor)
+
+    // timber
+    api( Logging.timber)
 
 
     // Test Dependencies
