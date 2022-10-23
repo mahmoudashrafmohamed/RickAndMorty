@@ -14,6 +14,7 @@ jobs:
       - name: Unit tests
         run: ./gradlew test
 
+
   android_tests:
     # The emulator can use hardware acceleration only on the macOS emulator. Therefore,
     #this job needs to run on a macOS runner while others can run on Ubuntu runners.
