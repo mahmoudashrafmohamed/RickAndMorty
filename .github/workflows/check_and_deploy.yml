@@ -1,0 +1,27 @@
+name: Test and deploy
+
+## Actions that will be executed when you push code currently none
+on:
+  push:
+
+jobs:
+  unit_tests:
+    runs-on: [ubuntu-latest]
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Unit tests
+        run: ./gradlew test
+
+  android_tests:
+    # The emulator can use hardware acceleration only on the macOS emulator. Therefore,
+    #this job needs to run on a macOS runner while others can run on Ubuntu runners.
+    runs-on: [ macos-latest ]
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Instrumentation Tests
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 29
+          script: ./gradlew connectedAndroidTest
