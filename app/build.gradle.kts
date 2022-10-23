@@ -23,14 +23,14 @@ android {
         testInstrumentationRunner = Config.testInstrumentationRunner
     }
 
-    signingConfigs {
+   /* signingConfigs {
         create("release") {
             keyAlias = "rick"
             keyPassword = "123456"
             storeFile = file("C:/Users/mahmoud_ashraf/rick_and_morty.jks")
             storePassword = "123456"
         }
-    }
+    }*/
     buildTypes {
         debug {
             applicationIdSuffix = ".debug"
@@ -52,7 +52,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            signingConfig = signingConfigs.getByName("release")
+        //    signingConfig = signingConfigs.getByName("release")
             isDebuggable = false
         }
     }
