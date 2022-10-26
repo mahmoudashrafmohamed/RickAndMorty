@@ -19,6 +19,7 @@ jobs:
     runs-on: [ubuntu-latest]
     env:
       PRIVATE_SERVICE_ACCOUNT_KEY: ${{secrets.GOOGLE_SERVICES_DEBUG_JSON}}
+      FIREBASE_CLI_TOKEN: ${{secrets.FIREBASE_CLI_TOKEN}}
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2

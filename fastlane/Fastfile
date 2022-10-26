@@ -17,6 +17,9 @@ default_platform(:android)
 
 platform :android do
 
+FIREBASE_CLI_TOKEN = ENV["FIREBASE_CLI_TOKEN"]
+
+
   desc "build app"
   lane :build do
     gradle(task: "clean assembleDebug")
@@ -29,7 +32,8 @@ platform :android do
     firebase_app_distribution(
           app: "1:541840207502:android:a9b547f5e4f0b04f00a3df",
           groups: "qa-team",
-          release_notes: "Lots of amazing new features to test out!"
+          release_notes: "Lots of amazing new features to test out!",
+           firebase_cli_token: FIREBASE_CLI_TOKEN
       )
   end
 
@@ -38,7 +42,7 @@ platform :android do
           lane :getLatestVersionAndUpgrade do
               latest_release = firebase_app_distribution_get_latest_release(
                 app: "1:541840207502:android:a9b547f5e4f0b04f00a3df",
-              firebase_cli_token: "1//03RO_pNHLZCudCgYIARAAGAMSNwF-L9IrK0gzcrm8T_l7gf7A_V_ZJQVA1i2PZWtIt1qq7tXzERgdJw-5k73bpIs1uHbwLteNa18"
+              firebase_cli_token: FIREBASE_CLI_TOKEN
               )
               increment_version_code({ version_code: latest_release[:buildVersion].to_i + 1 })
             end
