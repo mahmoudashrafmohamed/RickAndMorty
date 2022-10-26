@@ -37,11 +37,12 @@ jobs:
         bundle install --jobs 4 --retry 3
     - name: Install Firebase app distribution plugin
       run: fastlane add_plugin firebase_app_distribution
-    - name: Create a google-services.json in app
-        uses: jsdaniell/create-json@1.1.2
-        with:
-          name: "./app/google-services.json"
-          json: ${{ secrets.GOOGLE_SERVICES_DEBUG_JSON }}
+    - name: create-json
+      uses: jsdaniell/create-json@1.1.2
+      with:
+        name: "./app/google-services.json"
+        json: ${{secrets.GOOGLE_SERVICES_DEBUG_JSON}}
+        dir: "/home/runner/work/RickAndMorty/RickAndMorty/app/src/"
     - name: Upgrade build version
       run: bundle exec fastlane getLatestVersionAndUpgrade
     - name: Change wrapper permissions
