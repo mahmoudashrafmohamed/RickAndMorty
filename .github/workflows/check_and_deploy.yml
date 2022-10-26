@@ -42,7 +42,6 @@ jobs:
       with:
         name: "./app/google-services.json"
         json: ${{secrets.GOOGLE_SERVICES_DEBUG_JSON}}
-        dir: "/home/runner/work/RickAndMorty/RickAndMorty/app/src/"
     - name: Upgrade build version
       run: bundle exec fastlane getLatestVersionAndUpgrade
     - name: Change wrapper permissions
