@@ -27,8 +27,6 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 11
-    - name: Change wrapper permissions
-        run: chmod +x ./gradlew
     - name: Setup Ruby
       uses: actions/setup-ruby@v1
       with:
@@ -45,8 +43,11 @@ jobs:
       with:
         name: "./app/google-services.json"
         json: ${{secrets.GOOGLE_SERVICES_DEBUG_JSON}}
+    - name: Change wrapper permissions
+        run: chmod +x ./gradlew
     - name: Upgrade build version
       run: bundle exec fastlane getLatestVersionAndUpgrade
+
     - name: Upload .apk to Firebase
       run: bundle exec fastlane beta
 
