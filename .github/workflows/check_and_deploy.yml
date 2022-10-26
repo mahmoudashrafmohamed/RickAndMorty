@@ -2,7 +2,7 @@ name: Test and deploy
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "feature/fastlane" ]
   pull_request:
     branches: [ "main" ]
 jobs:
@@ -14,4 +14,31 @@ jobs:
         run: chmod +x ./gradlew
       - name: Unit tests
         run: ./gradlew test
+
+  upload_beta:
+    runs-on: [ubuntu-latest]
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+    - name: Setup JDK
+      uses: actions/setup-java@v1
+      with:
+        java-version: 11
+    - name: Setup Ruby
+      uses: actions/setup-ruby@v1
+      with:
+        ruby-version: '2.6'
+    - name: Install bundler & Fastlane
+      run: |
+        gem install bundler:2.2.27
+        bundle config path vendor/bundle
+        bundle install --jobs 4 --retry 3
+    - name: Install Firebase app distribution plugin
+      run: fastlane add_plugin firebase_app_distribution
+    - name: Generate google-services.json file
+      run: echo ${{secrets.GOOGLE_SERVICES_DEBUG_JSON}} | base64 -d > /home/runner/work/RickAndMorty/RickAndMorty/google-services.json
+    - name: Upgrade build version
+      run: bundle exec fastlane getLatestProdVersionAndUpdate
+    - name: Upload .apk to Firebase
+      run: bundle exec fastlane beta
 

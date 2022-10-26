@@ -27,7 +27,7 @@ platform :android do
     build
 
     firebase_app_distribution(
-          app: "",
+          app: "1:541840207502:android:a9b547f5e4f0b04f00a3df",
           groups: "qa-team",
           release_notes: "Lots of amazing new features to test out!"
       )
