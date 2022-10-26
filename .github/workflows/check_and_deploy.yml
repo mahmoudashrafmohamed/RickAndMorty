@@ -44,6 +44,8 @@ jobs:
         json: ${{secrets.GOOGLE_SERVICES_DEBUG_JSON}}
     - name: Upgrade build version
       run: bundle exec fastlane getLatestVersionAndUpgrade
+    - name: Change wrapper permissions
+        run: chmod +x ./gradlew
     - name: Upload .apk to Firebase
       run: bundle exec fastlane beta
 
