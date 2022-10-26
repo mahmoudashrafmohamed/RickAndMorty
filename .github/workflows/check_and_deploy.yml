@@ -43,7 +43,7 @@ jobs:
         name: "google-services.json"
         json: ${{secrets.GOOGLE_SERVICES_DEBUG_JSON}}
     - name: Upgrade build version
-      run: bundle exec fastlane getLatestProdVersionAndUpdate
+      run: bundle exec fastlane getLatestVersionAndUpgrade
     - name: Upload .apk to Firebase
       run: bundle exec fastlane beta
 
