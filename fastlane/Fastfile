@@ -16,23 +16,22 @@
 default_platform(:android)
 
 platform :android do
+
   desc "build app"
-  lane :debug do
+  lane :build do
     gradle(task: "clean assembleDebug")
   end
 
-  desc "Submit a new Beta Build to Crashlytics Beta"
+  desc "Submit a new Beta Build to Firebase App Distribution"
   lane :beta do
-    gradle(task: "clean assembleRelease")
-    crashlytics
-  
-    # sh "your_script.sh"
-    # You can also use other beta testing services here
+    build
+
+    firebase_app_distribution(
+          app: "",
+          groups: "qa-team",
+          release_notes: "Lots of amazing new features to test out!"
+      )
   end
 
-  desc "Deploy a new version to the Google Play"
-  lane :deploy do
-    gradle(task: "clean assembleRelease")
-    upload_to_play_store
-  end
+
 end
