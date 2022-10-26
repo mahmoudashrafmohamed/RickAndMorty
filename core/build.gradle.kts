@@ -8,6 +8,21 @@ import Dependencies.Skeleton
 import Dependencies.Glide
 import Dependencies.Chucker
 import Dependencies.Logging
+import java.io.FileInputStream
+import java.util.Properties
+
+val getProps by extra {
+    fun(propName: String): String {
+        val propsFile = rootProject.file("local.properties")
+        return if (propsFile.exists()) {
+            val props = Properties()
+            props.load(FileInputStream(propsFile))
+            (props[propName] as String?) ?: ""
+        } else {
+            ""
+        }
+    }
+}
 
 plugins {
     id(Plugins.androidLib)
@@ -36,16 +51,16 @@ android {
 
     buildTypes {
         debug {
-            buildConfigField("String", "BASE_URL", "\"" + LocalProperties.baseUrl + "\"")
+            buildConfigField("String", "BASE_URL", "\"" + getProps("baseUrl") + "\"")
             buildConfigField("String", "VERSION_NAME", "\"" + Config.versionName + "\"")
             isMinifyEnabled = false
-            consumerProguardFiles( "proguard-rules.pro")
+            consumerProguardFiles("proguard-rules.pro")
         }
         release {
-            buildConfigField("String", "BASE_URL", "\"" + LocalProperties.baseUrl + "\"")
+            buildConfigField("String", "BASE_URL", "\"" +getProps("baseUrl") + "\"")
             buildConfigField("String", "VERSION_NAME", "\"" + Config.versionName + "\"")
             isMinifyEnabled = true
-            consumerProguardFiles( "proguard-rules.pro")
+            consumerProguardFiles("proguard-rules.pro")
         }
     }
     compileOptions {
@@ -72,7 +87,7 @@ dependencies {
     api(AndroidX.LifecycleViewModel)
     api(AndroidX.FragmentKtx)
     api(AndroidX.LifecycleKTX)
-    api (AndroidX.recyclerView)
+    api(AndroidX.recyclerView)
 
     // Coroutines
     api(Kotlin.Coroutines)
@@ -104,16 +119,16 @@ dependencies {
     api(Retrofit.loggingInterceptor)
 
     // timber
-    api( Logging.timber)
+    api(Logging.timber)
 
 
     // Test Dependencies
     testImplementation(Test.Junit)
     androidTestImplementation(Test.JunitExt)
     androidTestImplementation(Test.EspressoCore)
-    testImplementation( Test.coroutines)
-    testImplementation( Test.mockito)
-    androidTestImplementation (Test.mockitoAndroid)
-    testImplementation (Test.mockitoInline)
-    testImplementation( Test.mockitoKotlinHelpers)
+    testImplementation(Test.coroutines)
+    testImplementation(Test.mockito)
+    androidTestImplementation(Test.mockitoAndroid)
+    testImplementation(Test.mockitoInline)
+    testImplementation(Test.mockitoKotlinHelpers)
 }
