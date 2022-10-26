@@ -37,8 +37,11 @@ jobs:
         bundle install --jobs 4 --retry 3
     - name: Install Firebase app distribution plugin
       run: fastlane add_plugin firebase_app_distribution
-    - name: Generate google-services.json file
-      run: echo ${{secrets.GOOGLE_SERVICES_DEBUG_JSON}} | base64 -d > /home/runner/work/RickAndMorty/RickAndMorty/google-services.json
+    - name: create-json
+      uses: jsdaniell/create-json@1.1.2
+      with:
+        name: "google-services.json"
+        json: ${{secrets.GOOGLE_SERVICES_DEBUG_JSON}}
     - name: Upgrade build version
       run: bundle exec fastlane getLatestProdVersionAndUpdate
     - name: Upload .apk to Firebase
