@@ -17,6 +17,8 @@ jobs:
 
   upload_beta:
     runs-on: [ubuntu-latest]
+    env:
+      PRIVATE_SERVICE_ACCOUNT_KEY: ${{secrets.GOOGLE_SERVICES_DEBUG_JSON}}
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
