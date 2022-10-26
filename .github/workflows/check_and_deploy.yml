@@ -21,10 +21,10 @@ jobs:
     #this job needs to run on a macOS runner while others can run on Ubuntu runners.
     runs-on: [ macos-latest ]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Instrumentation Tests
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: 29
-          script: ./gradlew connectedAndroidTest
+          script: ./gradlew connectedCheck
