@@ -37,28 +37,10 @@ platform :android do
           desc "Get latest build version from Firebase App Distribution"
           lane :getLatestVersionAndUpgrade do
               latest_release = firebase_app_distribution_get_latest_release(
-                  app: "1:541840207502:android:a9b547f5e4f0b04f00a3df",
-                  service_credentials_file: "/home/runner/work/RickAndMorty/RickAndMorty/google-services.json"
+                app: "1:541840207502:android:a9b547f5e4f0b04f00a3df"
               )
-              versionName = latest_release[:displayVersion]
-              versionNumber = latest_release[:buildVersion]
-              final_version_number = versionNumber.to_i + 1
-              versionNameArray = versionName.split(".")
-              major = versionNameArray[0]
-              minor = versionNameArray[1]
-              point = versionNameArray[2]
-              final_version_name_point = point.to_i + 1
-              final_version_name = major.to_s + "." + minor.to_s + "." + final_version_name_point.to_s
-              path = "../app/build.gradle"
-              versionCode = /versionCode\s+(\d+)/
-              versionName = /versionName\s+(\S+)/
-              s = File.read(path)
-              s[versionCode,1] = final_version_number.to_s
-              s[versionName,1] = "\"#{final_version_name}\""
-              f= File.new(path,'w')
-              f.write(s)
-              f.close
-          end
+              increment_version_code({ version_code: latest_release[:buildVersion].to_i + 1 })
+            end
 
 
 end
