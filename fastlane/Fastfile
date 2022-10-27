@@ -45,8 +45,10 @@ FIREBASE_CLI_TOKEN = ENV["FIREBASE_CLI_TOKEN"]
               )
                 print(latest_release)
                  gradle(task: "clean assembleDebug",  properties: {
-                                                                'versionCode' =>  latest_release[:buildVersion].to_i + 1
+                                                                'versionCode' =>  latest_release[:buildVersion].to_i + 1)
                                                               })
+                 beta
+
               #increment_version_code({ version_code: latest_release[:buildVersion].to_i + 1 })
             end
 

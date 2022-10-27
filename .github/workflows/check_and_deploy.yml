@@ -48,6 +48,6 @@ jobs:
       run: chmod +x ./gradlew
     - name: Upgrade build version
       run: bundle exec fastlane getLatestVersionAndUpgrade
-    - name: Upload .apk to Firebase
-      run: bundle exec fastlane beta
+   # - name: Upload .apk to Firebase
+    #  run: bundle exec fastlane beta
 
