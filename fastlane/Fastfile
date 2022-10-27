@@ -44,9 +44,15 @@ FIREBASE_CLI_TOKEN = ENV["FIREBASE_CLI_TOKEN"]
               firebase_cli_token: FIREBASE_CLI_TOKEN
               )
                 print(latest_release)
-                gradle(task: "clean assembleDebug",  properties: {
-                                                                'versionCode' =>  111
-                                                              })
+                 path = '../app/build.gradle'
+                    re = /versionCode\s+(\d+)/
+                    s = File.read(path)
+                    versionCode =latest_release[:buildVersion].to_i
+                    s[re, 1] = (versionCode + 1).to_s
+                    f = File.new(path, 'w')
+                    f.write(s)
+                    f.close
+                gradle(task: "clean assembleDebug")
                 beta
 
               #increment_version_code({ version_code: latest_release[:buildVersion].to_i + 1 })
