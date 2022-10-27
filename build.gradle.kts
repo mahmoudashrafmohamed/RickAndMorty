@@ -10,6 +10,7 @@ buildscript {
         classpath(GradleConfig.Kotlin)
         classpath(GradleConfig.hilt)
         classpath(GradleConfig.spotlessGradlePlugin)
+        classpath ("com.google.gms:google-services:4.3.13")
     }
 
 }

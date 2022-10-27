@@ -7,7 +7,7 @@ plugins {
     id(Plugins.daggerHilt)
     id(Plugins.kotlinKapt)
     id(Plugins.checkDependencyUpdates) version Versions.CheckDependencyUpdates
-
+    id ("com.google.gms.google-services")
 }
 
 android {
@@ -17,7 +17,7 @@ android {
         applicationId = Config.applicationId
         minSdk = Config.minSdkVersion
         targetSdk = Config.targetSdkVersion
-        versionCode = Config.versionCode
+        versionCode = 2
         versionName = Config.versionName
 
         testInstrumentationRunner = Config.testInstrumentationRunner
@@ -90,4 +90,7 @@ dependencies {
     // Dagger-Hilt
     implementation(Dependencies.DaggerHilt.hiltAndroid)
     kapt(Dependencies.DaggerHilt.hiltKapt)
+    // firebase
+    implementation(platform("com.google.firebase:firebase-bom:31.0.1"))
+    implementation ("com.google.firebase:firebase-analytics-ktx")
 }
