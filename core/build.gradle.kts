@@ -51,13 +51,11 @@ android {
 
     buildTypes {
         debug {
-            buildConfigField("String", "BASE_URL", "\"" + getProps("baseUrl") + "\"")
             buildConfigField("String", "VERSION_NAME", "\"" + Config.versionName + "\"")
             isMinifyEnabled = false
             consumerProguardFiles("proguard-rules.pro")
         }
         release {
-            buildConfigField("String", "BASE_URL", "\"" +getProps("baseUrl") + "\"")
             buildConfigField("String", "VERSION_NAME", "\"" + Config.versionName + "\"")
             isMinifyEnabled = true
             consumerProguardFiles("proguard-rules.pro")
@@ -75,6 +73,7 @@ android {
 dependencies {
 
     api(project(Dependencies.Modules.entities))
+    api(project(Dependencies.Modules.nativelib))
     // Core Dependencies
     api(Kotlin.Stdlib)
     api(AndroidX.CoreKtx)
