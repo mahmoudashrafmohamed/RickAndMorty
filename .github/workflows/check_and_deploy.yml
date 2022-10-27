@@ -2,12 +2,12 @@ name: Test and deploy
 
 on:
   push:
-    branches: [ "feature/fastlane" ]
+    branches: [ "feature/fastlane","main" ]
   pull_request:
     branches: [ "main" ]
 jobs:
   unit_tests:
-    runs-on: [ubuntu-latest]
+    runs-on: [ ubuntu-latest ]
     steps:
       - uses: actions/checkout@v2
       - name: Change wrapper permissions
@@ -16,38 +16,38 @@ jobs:
         run: ./gradlew test
 
   upload_beta:
-    runs-on: [ubuntu-latest]
+    runs-on: [ ubuntu-latest ]
     env:
       PRIVATE_SERVICE_ACCOUNT_KEY: ${{secrets.GOOGLE_SERVICES_DEBUG_JSON}}
       FIREBASE_CLI_TOKEN: ${{secrets.FIREBASE_CLI_TOKEN}}
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
-    - name: Setup JDK
-      uses: actions/setup-java@v1
-      with:
-        java-version: 11
-    - name: Setup Ruby
-      uses: actions/setup-ruby@v1
-      with:
-        ruby-version: '2.6'
-    - name: Install bundler & Fastlane
-      run: |
-        gem install bundler:2.2.27
-        bundle config path vendor/bundle
-        bundle install --jobs 4 --retry 3
-    - name: Install Firebase app distribution plugin
-      run: fastlane add_plugin firebase_app_distribution
-    - name: create-json
-      uses: jsdaniell/create-json@1.1.2
-      with:
-        name: "./app/google-services.json"
-        json: ${{secrets.GOOGLE_SERVICES_DEBUG_JSON}}
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Setup JDK
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11
+      - name: Setup Ruby
+        uses: actions/setup-ruby@v1
+        with:
+          ruby-version: '2.6'
+      - name: Install bundler & Fastlane
+        run: |
+          gem install bundler:2.2.27
+          bundle config path vendor/bundle
+          bundle install --jobs 4 --retry 3
+      - name: Install Firebase app distribution plugin
+        run: fastlane add_plugin firebase_app_distribution
+      - name: create-json
+        uses: jsdaniell/create-json@1.1.2
+        with:
+          name: "./app/google-services.json"
+          json: ${{secrets.GOOGLE_SERVICES_DEBUG_JSON}}
 
-    - name: Change wrapper permissions
-      run: chmod +x ./gradlew
-    - name: Upgrade build version
-      run: bundle exec fastlane getLatestVersionAndUpgrade
-   # - name: Upload .apk to Firebase
-    #  run: bundle exec fastlane beta
+      - name: Change wrapper permissions
+        run: chmod +x ./gradlew
+      - name: Upgrade build version
+        run: bundle exec fastlane getLatestVersionAndUpgrade
+      - name: Upload .apk to Firebase
+        run: bundle exec fastlane beta
 

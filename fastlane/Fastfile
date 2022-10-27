@@ -22,12 +22,12 @@ FIREBASE_CLI_TOKEN = ENV["FIREBASE_CLI_TOKEN"]
 
   desc "build app"
   lane :build do
+  gradle(task: "clean assembleDebug")
   end
 
   desc "Submit a new Beta Build to Firebase App Distribution"
   lane :beta do
-    #build
-
+    build
     firebase_app_distribution(
           app: "1:541840207502:android:a9b547f5e4f0b04f00a3df",
           groups: "qa-team",
@@ -36,29 +36,18 @@ FIREBASE_CLI_TOKEN = ENV["FIREBASE_CLI_TOKEN"]
       )
   end
 
-   # Fetch latest build version from Firebase App Distribution and increment version by 1
-          desc "Get latest build version from Firebase App Distribution"
-          lane :getLatestVersionAndUpgrade do
+  desc "Get latest build version from Firebase App Distribution And Upgrade"
+  lane :getLatestVersionAndUpgrade do
               latest_release = firebase_app_distribution_get_latest_release(
                 app: "1:541840207502:android:a9b547f5e4f0b04f00a3df",
               firebase_cli_token: FIREBASE_CLI_TOKEN
               )
-                print(latest_release)
-                UPDATED_VERSION_CODE = latest_release[:buildVersion].to_i + 1
-                  print(UPDATED_VERSION_CODE.to_i)
-                   android_set_version_code(
+  UPDATED_VERSION_CODE = latest_release[:buildVersion].to_i + 1
+  android_set_version_code(
                       version_code: UPDATED_VERSION_CODE.to_i, # optional, if not specified, Version Code will be incremented
                       gradle_file: "app/build.gradle.kts" # optional
-                    )
-#              increment_version_code(
-#                  gradle_file_path:"../app/build.gradle",
-#                  version_code: UPDATED_VERSION_CODE.to_i
-#                )
-                #gradle(task: "clean assembleDebug")
-                #beta
-
-              #increment_version_code({ version_code: latest_release[:buildVersion].to_i + 1 })
-            end
+  )
+  end
 
 
 end
