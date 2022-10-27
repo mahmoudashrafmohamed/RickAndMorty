@@ -26,7 +26,7 @@ FIREBASE_CLI_TOKEN = ENV["FIREBASE_CLI_TOKEN"]
 
   desc "Submit a new Beta Build to Firebase App Distribution"
   lane :beta do
-    build
+    #build
 
     firebase_app_distribution(
           app: "1:541840207502:android:a9b547f5e4f0b04f00a3df",
@@ -44,10 +44,10 @@ FIREBASE_CLI_TOKEN = ENV["FIREBASE_CLI_TOKEN"]
               firebase_cli_token: FIREBASE_CLI_TOKEN
               )
                 print(latest_release)
-                 gradle(task: "clean assembleDebug",  properties: {
-                                                                'versionCode' =>  latest_release[:buildVersion].to_i + 1)
+                gradle(task: "clean assembleDebug",  properties: {
+                                                                'versionCode' =>  latest_release[:buildVersion].to_i + 1
                                                               })
-                 beta
+                beta
 
               #increment_version_code({ version_code: latest_release[:buildVersion].to_i + 1 })
             end
