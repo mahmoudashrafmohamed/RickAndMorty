@@ -45,12 +45,17 @@ FIREBASE_CLI_TOKEN = ENV["FIREBASE_CLI_TOKEN"]
               )
                 print(latest_release)
                 UPDATED_VERSION_CODE = latest_release[:buildVersion].to_i + 1
-             increment_version_code(
-                 gradle_file_path:"./app/build.gradle",
-                 version_code: UPDATED_VERSION_CODE.to_i
-               )
-                gradle(task: "clean assembleDebug")
-                beta
+                  print(UPDATED_VERSION_CODE.to_i)
+                   android_set_version_code(
+                      version_code: UPDATED_VERSION_CODE.to_i, # optional, if not specified, Version Code will be incremented
+                      gradle_file: "app/build.gradle.kts" # optional
+                    )
+#              increment_version_code(
+#                  gradle_file_path:"../app/build.gradle",
+#                  version_code: UPDATED_VERSION_CODE.to_i
+#                )
+                #gradle(task: "clean assembleDebug")
+                #beta
 
               #increment_version_code({ version_code: latest_release[:buildVersion].to_i + 1 })
             end
