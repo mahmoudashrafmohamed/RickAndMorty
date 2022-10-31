@@ -14,42 +14,42 @@ import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
 class CharactersRepositoryImpl @Inject constructor(
-    private val charactersRemoteDataSource: CharactersRemoteDataSource,
-    private val charactersLocalDataSource: CharactersLocalDataSource,
-    private val prefsDataStore: PrefsDataStore
+  private val charactersRemoteDataSource: CharactersRemoteDataSource,
+  private val charactersLocalDataSource: CharactersLocalDataSource,
+  private val prefsDataStore: PrefsDataStore
 ) : CharactersRepository {
-    override suspend fun getCharacters(page: Int) =
-        flow {
-            charactersLocalDataSource.getCharacters(page)
-                .takeIf {
-                    it.isNotEmpty() && shouldCallApi(
-                        lastApiCallMillis = prefsDataStore.lastCallApiTime.first()
-                    ).not()
-                }
-                ?.let { characters ->
-                    emit(characters.map { it.asCharacterEntity() })
-                }
-                ?: run {
-                    charactersRemoteDataSource.getCharacters(page).let { response ->
-                        charactersLocalDataSource.addCharacters(response.data.map {
-                            it.asCharacterLocalEntity(
-                                page
-                            )
-                        })
-                        Log.e("update","db")
-                        prefsDataStore.updateLastCallApiTime(System.currentTimeMillis())
-                        emit(response.data.map { it.asCharacterEntity() })
-                    }
-                }
+  override suspend fun getCharacters(page: Int) =
+    flow {
+      charactersLocalDataSource.getCharacters(page)
+        .takeIf {
+          it.isNotEmpty() && shouldCallApi(
+            lastApiCallMillis = prefsDataStore.lastCallApiTime.first()
+          ).not()
+        }
+        ?.let { characters ->
+          emit(characters.map { it.asCharacterEntity() })
+        }
+        ?: run {
+          charactersRemoteDataSource.getCharacters(page).let { response ->
+            charactersLocalDataSource.addCharacters(
+              response.data.map {
+                it.asCharacterLocalEntity(
+                  page
+                )
+              }
+            )
+            Log.e("update", "db")
+            prefsDataStore.updateLastCallApiTime(System.currentTimeMillis())
+            emit(response.data.map { it.asCharacterEntity() })
+          }
+        }
+    }.flowOn(Dispatchers.IO)
 
-        }.flowOn(Dispatchers.IO)
-
-    private fun shouldCallApi(
-        lastApiCallMillis: Long,
-        cacheThresholdInMillis: Long = 300000L //default value is 5 minutes//
-    ): Boolean {
-        Log.e("shouldcallApi","called")
-        return (System.currentTimeMillis() - lastApiCallMillis) >= cacheThresholdInMillis
-    }
-
+  private fun shouldCallApi(
+    lastApiCallMillis: Long,
+    cacheThresholdInMillis: Long = 300000L // default value is 5 minutes//
+  ): Boolean {
+    Log.e("shouldcallApi", "called")
+    return (System.currentTimeMillis() - lastApiCallMillis) >= cacheThresholdInMillis
+  }
 }

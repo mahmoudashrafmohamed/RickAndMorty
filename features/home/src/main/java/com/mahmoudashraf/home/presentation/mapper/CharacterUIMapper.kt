@@ -5,7 +5,7 @@ import com.mahmoudashraf.home.presentation.model.BaseCharacterUIModel
 import com.mahmoudashraf.home.presentation.model.CharacterUIModel
 
 fun List<Character>.asUIModel(): List<BaseCharacterUIModel> {
-    return this.map {
-        CharacterUIModel(it.id, it.name, it.image)
-    }
+  return this.map {
+    CharacterUIModel(it.id, it.name, it.image)
+  }
 }

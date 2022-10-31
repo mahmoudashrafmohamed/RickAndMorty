@@ -18,4 +18,18 @@ jobs:
 
       - name: Unit tests
         run: ./gradlew test
+  lint:
+    runs-on: [ ubuntu-latest ]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Change wrapper permissions
+        run: chmod +x ./gradlew
+      - name: create-json
+        uses: jsdaniell/create-json@1.1.2
+        with:
+          name: "./app/google-services.json"
+          json: ${{secrets.GOOGLE_SERVICES_DEBUG_JSON}}
+
+      - name: spotless
+        run: ./gradlew spotlessCheck
 

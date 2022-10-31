@@ -23,7 +23,6 @@ class SplashFragment : Fragment() {
   lateinit var splashActions: SplashActions
   private val viewModel: SplashViewModel by viewModels()
 
-
   override fun onCreateView(
     inflater: LayoutInflater,
     container: ViewGroup?,

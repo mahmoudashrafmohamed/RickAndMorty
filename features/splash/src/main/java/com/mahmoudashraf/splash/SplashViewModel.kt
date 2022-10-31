@@ -7,6 +7,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SplashViewModel @Inject constructor(private val uiModeInterActor: UIModeInterActor) : ViewModel() {
-    // get UI mode
-    val uiMode = uiModeInterActor.getUiModeData()
+  // get UI mode
+  val uiMode = uiModeInterActor.getUiModeData()
 }
