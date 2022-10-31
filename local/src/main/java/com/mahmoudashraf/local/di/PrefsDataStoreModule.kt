@@ -13,9 +13,9 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object PrefsDataStoreModule {
-    @Provides
-    @Singleton
-    fun provideCharactersService(@ApplicationContext context: Context): PrefsDataStore {
-        return PrefsDataStoreImpl(context)
-    }
+  @Provides
+  @Singleton
+  fun provideCharactersService(@ApplicationContext context: Context): PrefsDataStore {
+    return PrefsDataStoreImpl(context)
+  }
 }

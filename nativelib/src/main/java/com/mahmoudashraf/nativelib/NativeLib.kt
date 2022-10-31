@@ -1,8 +1,8 @@
 package com.mahmoudashraf.nativelib
 
 object NativeLib {
-    init {
-        System.loadLibrary("nativelib")
-    }
-    external fun baseUrl(): String
+  init {
+    System.loadLibrary("nativelib")
+  }
+  external fun baseUrl(): String
 }

@@ -8,13 +8,12 @@ import com.mahmoudashraf.about.databinding.FragmentAboutBinding
 import com.mahmoudashraf.core.BuildConfig
 import com.mahmoudashraf.core.viewbinding.viewBinding
 
-
 class AboutFragment : Fragment(R.layout.fragment_about) {
-    private val binding by viewBinding(FragmentAboutBinding::bind)
+  private val binding by viewBinding(FragmentAboutBinding::bind)
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        val appVersion = BuildConfig.VERSION_NAME
-        binding.tvAppVersion.text = appVersion
-    }
+  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    super.onViewCreated(view, savedInstanceState)
+    val appVersion = BuildConfig.VERSION_NAME
+    binding.tvAppVersion.text = appVersion
+  }
 }

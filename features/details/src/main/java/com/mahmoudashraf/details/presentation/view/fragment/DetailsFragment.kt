@@ -13,21 +13,21 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class DetailsFragment : Fragment(R.layout.fragment_details) {
-    private val binding by viewBinding(FragmentDetailsBinding::bind)
-    private val character by lazy { arguments?.getParcelable<Character>(NavigationConstants.CHARACTER) }
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        initView()
-    }
+  private val binding by viewBinding(FragmentDetailsBinding::bind)
+  private val character by lazy { arguments?.getParcelable<Character>(NavigationConstants.CHARACTER) }
+  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    super.onViewCreated(view, savedInstanceState)
+    initView()
+  }
 
-    private fun initView() {
-        character?.let {
-            binding.tvCharacterName.text = it.name
-            Glide.with(binding.imgCharacter).load(it.image).into(binding.imgCharacter)
-            binding.tvGender.text = it.gender
-            binding.tvSpecies.text = it.species
-            binding.tvStatus.text = it.status
-            binding.tvLocation.text = it.locationText
-        }
+  private fun initView() {
+    character?.let {
+      binding.tvCharacterName.text = it.name
+      Glide.with(binding.imgCharacter).load(it.image).into(binding.imgCharacter)
+      binding.tvGender.text = it.gender
+      binding.tvSpecies.text = it.species
+      binding.tvStatus.text = it.status
+      binding.tvLocation.text = it.locationText
     }
+  }
 }

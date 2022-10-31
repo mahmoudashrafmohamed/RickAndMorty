@@ -20,7 +20,7 @@ object ApiModule {
   @Provides
   @Singleton
   fun provideCharactersService(@ApplicationContext context: Context): com.mahmoudashraf.remote.services.CharactersService {
-    return ApiServiceFactory.create(BuildConfig.DEBUG,context,  NativeLib.baseUrl())
+    return ApiServiceFactory.create(BuildConfig.DEBUG, context, NativeLib.baseUrl())
   }
 }
 

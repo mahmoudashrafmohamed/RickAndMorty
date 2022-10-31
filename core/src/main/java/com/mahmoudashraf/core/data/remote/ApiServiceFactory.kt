@@ -14,71 +14,70 @@ import java.util.concurrent.TimeUnit
 
 object ApiServiceFactory {
 
-    inline fun <reified T> create(isDebug: Boolean, context: Context, baseUrl: String): T {
-        val retrofit = createRetrofit(isDebug, context, baseUrl)
-        return retrofit.create(T::class.java)
+  inline fun <reified T> create(isDebug: Boolean, context: Context, baseUrl: String): T {
+    val retrofit = createRetrofit(isDebug, context, baseUrl)
+    return retrofit.create(T::class.java)
+  }
+
+  fun createRetrofit(isDebug: Boolean, context: Context, baseUrl: String): Retrofit {
+    return Retrofit.Builder()
+      .baseUrl(baseUrl)
+      .client(
+        createOkHttpClient(
+          createLoggingInterceptor(isDebug),
+          createPrettyLoggingInterceptor(isDebug),
+          createChuckerInterceptor(context),
+          createNetworkConnectionInterceptor(context)
+        )
+      )
+      .addConverterFactory(GsonConverterFactory.create())
+      .build()
+  }
+
+  private fun createOkHttpClient(
+    httpLoggingInterceptor: HttpLoggingInterceptor,
+    loggingInterceptor: LoggingInterceptor,
+    chuckerInterceptor: ChuckerInterceptor,
+    networkConnectionInterceptor: NetworkConnectionInterceptor
+
+  ): OkHttpClient {
+    return OkHttpClient.Builder()
+      .addInterceptor(httpLoggingInterceptor)
+      .addInterceptor(loggingInterceptor)
+      .addInterceptor(chuckerInterceptor)
+      .addInterceptor(networkConnectionInterceptor)
+      .connectTimeout(OK_HTTP_TIMEOUT, TimeUnit.SECONDS)
+      .readTimeout(OK_HTTP_TIMEOUT, TimeUnit.SECONDS)
+      .dispatcher(Dispatcher().apply { maxRequestsPerHost = 20 })
+      .build()
+  }
+
+  private fun createChuckerInterceptor(context: Context) =
+    ChuckerInterceptor.Builder(context)
+      .maxContentLength(250_000L)
+      .build()
+
+  private fun createNetworkConnectionInterceptor(context: Context) =
+    NetworkConnectionInterceptor(context)
+
+  private fun createLoggingInterceptor(isDebug: Boolean): HttpLoggingInterceptor {
+    return HttpLoggingInterceptor().apply {
+      level = if (isDebug) {
+        HttpLoggingInterceptor.Level.BODY
+      } else {
+        HttpLoggingInterceptor.Level.NONE
+      }
     }
+  }
 
-    fun createRetrofit(isDebug: Boolean, context: Context, baseUrl: String): Retrofit {
-        return Retrofit.Builder()
-            .baseUrl(baseUrl)
-            .client(
-                createOkHttpClient(
-                    createLoggingInterceptor(isDebug),
-                    createPrettyLoggingInterceptor(isDebug),
-                    createChuckerInterceptor(context),
-                    createNetworkConnectionInterceptor(context)
-                )
-            )
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-    }
+  private fun createPrettyLoggingInterceptor(isDebug: Boolean): LoggingInterceptor {
+    val level = if (isDebug) Level.BODY
+    else Level.NONE
+    return LoggingInterceptor.Builder()
+      .setLevel(level)
+      .log(Platform.INFO)
+      .build()
+  }
 
-
-    private fun createOkHttpClient(
-        httpLoggingInterceptor: HttpLoggingInterceptor,
-        loggingInterceptor: LoggingInterceptor,
-        chuckerInterceptor: ChuckerInterceptor,
-        networkConnectionInterceptor: NetworkConnectionInterceptor
-
-    ): OkHttpClient {
-        return OkHttpClient.Builder()
-            .addInterceptor(httpLoggingInterceptor)
-            .addInterceptor(loggingInterceptor)
-            .addInterceptor(chuckerInterceptor)
-            .addInterceptor(networkConnectionInterceptor)
-            .connectTimeout(OK_HTTP_TIMEOUT, TimeUnit.SECONDS)
-            .readTimeout(OK_HTTP_TIMEOUT, TimeUnit.SECONDS)
-            .dispatcher(Dispatcher().apply { maxRequestsPerHost = 20 })
-            .build()
-    }
-
-    private fun createChuckerInterceptor(context: Context) =
-        ChuckerInterceptor.Builder(context)
-            .maxContentLength(250_000L)
-            .build()
-
-    private fun createNetworkConnectionInterceptor(context: Context) =
-        NetworkConnectionInterceptor(context)
-
-    private fun createLoggingInterceptor(isDebug: Boolean): HttpLoggingInterceptor {
-        return HttpLoggingInterceptor().apply {
-            level = if (isDebug) {
-                HttpLoggingInterceptor.Level.BODY
-            } else {
-                HttpLoggingInterceptor.Level.NONE
-            }
-        }
-    }
-
-    private fun createPrettyLoggingInterceptor(isDebug: Boolean): LoggingInterceptor {
-        val level = if (isDebug) Level.BODY
-        else Level.NONE
-        return LoggingInterceptor.Builder()
-            .setLevel(level)
-            .log(Platform.INFO)
-            .build()
-    }
-
-    private const val OK_HTTP_TIMEOUT = 60L
+  private const val OK_HTTP_TIMEOUT = 60L
 }
