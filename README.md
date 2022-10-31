@@ -24,6 +24,8 @@
 - [Fastlane](https://fastlane.tools/) - an open source platform aimed at simplifying Android and iOS deployment.
 - CI setup with GitHub Actions.
 - Use different assets for debug and release build variant with descriptive app names.
+- Enable ProGuard.
+- Native Lib to save secret keys.
 
 
 
