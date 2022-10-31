@@ -7,7 +7,7 @@ plugins {
     id(Plugins.daggerHilt)
     id(Plugins.kotlinKapt)
     id(Plugins.checkDependencyUpdates) version Versions.CheckDependencyUpdates
-    id ("com.google.gms.google-services")
+    id (Plugins.googleServices)
 }
 
 android {
@@ -23,14 +23,6 @@ android {
         testInstrumentationRunner = Config.testInstrumentationRunner
     }
 
-  /*  signingConfigs {
-        create("release") {
-            keyAlias = "rick"
-            keyPassword = "123456"
-            storeFile = file("C:/Users/mahmoud_ashraf/rick_and_morty.jks")
-            storePassword = "123456"
-        }
-    }*/
     buildTypes {
         debug {
             applicationIdSuffix = ".debug"
@@ -52,7 +44,6 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-        //    signingConfig = signingConfigs.getByName("release")
             isDebuggable = false
         }
     }
@@ -69,10 +60,6 @@ android {
 }
 
 dependencies {
-    implementation(project(Modules.splash))
-    implementation(project(Modules.about))
-    implementation(project(Modules.details))
-    implementation(project(Modules.home))
     implementation(project(Modules.core)) {
         testImplementation(
             project(
@@ -87,10 +74,14 @@ dependencies {
             )
         )
     }
+    implementation(project(Modules.splash))
+    implementation(project(Modules.about))
+    implementation(project(Modules.details))
+    implementation(project(Modules.home))
     // Dagger-Hilt
     implementation(Dependencies.DaggerHilt.hiltAndroid)
     kapt(Dependencies.DaggerHilt.hiltKapt)
     // firebase
-    implementation(platform("com.google.firebase:firebase-bom:31.0.1"))
-    implementation ("com.google.firebase:firebase-analytics-ktx")
+    implementation(platform(Dependencies.Firebase.firebaseBom))
+    implementation (Dependencies.Firebase.firebaseAnalytics)
 }

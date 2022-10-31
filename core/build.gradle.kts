@@ -74,6 +74,7 @@ dependencies {
 
     api(project(Dependencies.Modules.entities))
     api(project(Dependencies.Modules.nativelib))
+
     // Core Dependencies
     api(Kotlin.Stdlib)
     api(AndroidX.CoreKtx)
@@ -109,7 +110,6 @@ dependencies {
     // chuker
     debugImplementation(Chucker.chuckerDebug)
     releaseImplementation(Chucker.chuckerRelease)
-
     api(project(Dependencies.Modules.resources))
 
     // Retrofit
@@ -119,7 +119,6 @@ dependencies {
 
     // timber
     api(Logging.timber)
-
 
     // Test Dependencies
     testImplementation(Test.Junit)

@@ -6,4 +6,5 @@ object Plugins {
     const val checkDependencyUpdates = "name.remal.check-dependency-updates"
     const val daggerHilt = "dagger.hilt.android.plugin"
     const val kotlinParcelize = "kotlin-parcelize"
+    const val googleServices = "com.google.gms.google-services"
 }

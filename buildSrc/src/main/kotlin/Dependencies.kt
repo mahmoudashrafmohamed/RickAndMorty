@@ -30,6 +30,11 @@ object Dependencies {
         const val hiltViewModel = "androidx.hilt:hilt-lifecycle-viewmodel:${Versions.hiltViewModel}"
     }
 
+    object Firebase {
+        const val firebaseBom = "com.google.firebase:firebase-bom:${Versions.firebase}"
+        const val firebaseAnalytics = "com.google.firebase:firebase-analytics-ktx"
+    }
+
     object Retrofit {
         const val retrofit = "com.squareup.retrofit2:retrofit:${Versions.retrofit}"
         const val gson = "com.squareup.retrofit2:converter-gson:${Versions.gson}"
