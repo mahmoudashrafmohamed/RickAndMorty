@@ -5,6 +5,7 @@
 - Modularization.
 - Clean Architecture approach.
 - 100% [Kotlin](https://kotlinlang.org/) based + [Coroutines](https://github.com/Kotlin/kotlinx.coroutines) + [Flow](https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines.flow/) for asynchronous.
+- 💡🔦🗽 ( Dark & Light) Mode. 💫
 - [Hilt](https://dagger.dev/hilt/): for dependency injection.
 - [Gradle Kotlin DSL](https://github.com/gradle/kotlin-dsl-samples) - makes it easy to manage dependency all module that we have.
 - [Timber](https://github.com/JakeWharton/timber) - logging.
